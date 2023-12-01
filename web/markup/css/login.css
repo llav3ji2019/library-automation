@@ -1,0 +1,78 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background: url(../img/login-back.jpg);
+  background-size: cover;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.login__login-title {
+  color: #ffffff;
+  margin: 0;
+  padding: 0 0 30px;
+  text-align: center;
+}
+
+.login .login-block {
+  position: relative;
+}
+
+.login .login-block input{
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 30px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+}
+.login .login-block label{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #ffffff;
+  pointer-events: none;
+  transition: .5s;
+}
+.login input[type="submit"]{
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  background: #03a9f4;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.login .login-block input:focus,
+.login .login-block input:valid{
+    border-bottom: 1px solid #03a9f4;
+}
+
+.login .login-block input:focus ~ label,
+.login .login-block input:valid ~ label{
+    top: -18px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+    font-weight: bold;
+}

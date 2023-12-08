@@ -3,8 +3,33 @@ import Footer from '../../component/footer/footer';
 import { useState } from 'react';
 import JournalForm from '../../component/form/journal-form/journal-form';
 
+function selectToggle(this: Element): void {
+  this.parentElement?.classList.toggle('is-active');
+ }
+
+function selectChoose(this: HTMLDivElement): void {
+  let text = this.innerText,
+      select = this.closest('.select') as HTMLDivElement,
+      currentText = select.querySelector('.select__current') as HTMLDivElement;
+  currentText.innerText = text;
+  select.classList.remove('is-active');
+}
+  
+
 function JournalPage():JSX.Element {
   const [formActive, setFromActive] = useState(false);
+  
+  
+  let selectHeader = document.querySelectorAll('.select__header');
+    let selectItem = document.querySelectorAll('.select__item');
+  
+    selectHeader.forEach(item => {
+        item.addEventListener('click', selectToggle)
+    });
+  
+    selectItem.forEach(item => {
+        item.addEventListener('click', selectChoose)
+    });
 
   return (
     <>
@@ -38,12 +63,56 @@ function JournalPage():JSX.Element {
           </table>
           <button type="submit" className="btn-add-row" onClick={() => setFromActive(true)}>Add value</button>
           <JournalForm active = {formActive} setActive={setFromActive} >
-            <form>
-              <input type='text'></input>
-              <input type='text'></input>
-              <input type='text'></input>
-              <button></button>
-            </form>
+          <div className="journal-form">
+            <h2 className="custom-form__title">Login</h2>
+              <form>
+              <div className="custom-form-block">
+                  <div className="select">
+                    <div className="select__header">
+                      <span className="select__current">Client name</span>
+                      <div className="select__icon">&times;</div>
+                    </div>
+                  
+                    <div className="select__body">
+                      <div className="select__item">Value 1</div>
+                      <div className="select__item">Value 2</div>
+                      <div className="select__item">Value 3</div>
+                      <div className="select__item">Value 4</div>
+                      <div className="select__item">Value 5</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="custom-form-block">
+                  <div className="select">
+                    <div className="select__header">
+                      <span className="select__current">Book name</span>
+                      <div className="select__icon">&times;</div>
+                    </div>
+                  
+                    <div className="select__body">
+                      <div className="select__item">Value 1</div>
+                      <div className="select__item">Value 2</div>
+                      <div className="select__item">Value 3</div>
+                      <div className="select__item">Value 4</div>
+                      <div className="select__item">Value 5</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="custom-form-block">
+                  <label>Begin date:</label>
+                  <input type="date" id="birthday" name="birthday" autoComplete="off" />
+                </div>
+                <div className="custom-form-block">
+                  <label>End date:</label>
+                  <input type="date" id="birthday" name="birthday" autoComplete="off" />
+                </div>
+                <div className="custom-form-block">
+                  <label>Return date:</label>
+                  <input type="date" id="birthday" name="birthday" autoComplete="off" />
+                </div>
+              </form>
+            <input type="submit" name="submit" value="Submit" onClick={() => setFromActive(false)} />
+          </div>
           </JournalForm>
       </section>
       <Footer />

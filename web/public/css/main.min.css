@@ -32,3 +32,130 @@
 .form__content.active {
   transform: scale(1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.custom-form__title {
+  color: #000;
+  margin: 0;
+  padding: 0 0 30px;
+  text-align: center;
+}
+
+.journal-form .custom-form-block {
+  position: relative;
+}
+
+.journal-form .custom-form-block input{
+  width: auto;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 30px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+}
+
+.journal-form .custom-form-block .select {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.journal-form .custom-form-block label{
+  padding: 10px 0;
+  pointer-events: none;
+  transition: .5s;
+  margin-right: 20px;
+}
+.journal-form input[type="submit"]{
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #000;
+  background: #37ad00;
+  margin-top: 40px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.journal-form .custom-form-block input:focus,
+.journal-form .custom-form-block input:valid{
+    border-bottom: 1px solid rgb(244, 180, 3);
+}
+
+.journal-form .custom-form-block input:focus ~ label,
+.journal-form .custom-form-block input:valid ~ label{
+    top: -18px;
+    left: 0;
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.select {
+	margin: 0 auto;
+	position: relative;
+	width: 250px;
+}
+.select.is-active .select__body {
+	display: block;
+}
+
+.select__header {
+	border: 1px solid #ccc;
+	cursor: pointer;
+	display: flex;
+}
+.select__current {
+	font-size: 18px;
+	line-height: 24px;
+	padding: 8px;
+  background-color: inherit;
+}
+.select__icon {
+	align-items: center;
+	display: flex;
+	flex-shrink: 0;
+	justify-content: center;
+	height: 40px;
+	margin-left: auto;
+	text-align: center;
+	width: 40px;
+}
+
+.select__body {
+	border: 1px solid #cccccc;
+	border-top: 0;
+	display: none;
+	left: 0;
+	position: absolute;
+  z-index: 1;
+	right: 0;
+}
+.select__item {
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 24px;
+	padding: 8px;
+  background-color: #fff;
+}
+
+.select__item:hover {
+	background-color: #f2f2f2;
+}

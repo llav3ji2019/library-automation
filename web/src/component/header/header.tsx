@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { AppRoute } from "../../const";
 
 function Header(): JSX.Element {
   return (
@@ -16,9 +18,9 @@ function Header(): JSX.Element {
       </div>
 
       <div className="header__btn-list">
-        <button type="button" className="btn-list__item">Journal</button>
-        <button type="button" className="btn-list__item">Handbook</button>
-        <button type="button" className="btn-list__item">Report</button>
+        <Link to={AppRoute.Journal} className="btn-list__item">Journal</Link>
+        <Link to={AppRoute.Handbook} className="btn-list__item">Handbook</Link>
+        <Link to={AppRoute.Report} className="btn-list__item">Report</Link>
       </div>
     </header>
   );

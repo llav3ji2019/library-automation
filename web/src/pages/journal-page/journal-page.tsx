@@ -1,7 +1,11 @@
 import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
+import { useState } from 'react';
+import JournalForm from '../../component/form/journal-form/journal-form';
 
 function JournalPage():JSX.Element {
+  const [formActive, setFromActive] = useState(false);
+
   return (
     <>
       <Header />
@@ -32,7 +36,15 @@ function JournalPage():JSX.Element {
               </td>
             </tr>
           </table>
-          <button type="submit" className="btn-add-row">Add value</button>
+          <button type="submit" className="btn-add-row" onClick={() => setFromActive(true)}>Add value</button>
+          <JournalForm active = {formActive} setActive={setFromActive} >
+            <form>
+              <input type='text'></input>
+              <input type='text'></input>
+              <input type='text'></input>
+              <button></button>
+            </form>
+          </JournalForm>
       </section>
       <Footer />
     </>

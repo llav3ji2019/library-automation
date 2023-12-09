@@ -2,6 +2,7 @@ import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
 import { useState } from 'react';
 import JournalForm from '../../component/form/journal-form/journal-form';
+import CustomForm from '../../component/form/custom-form';
 
 function selectToggle(this: Element): void {
   this.parentElement?.classList.toggle('is-active');
@@ -79,58 +80,7 @@ function HandbookPage(): JSX.Element {
           </tr>
         </table>
         <button type="submit" className="btn-add-row" onClick={() => setFromActive(true)}>Add value</button>
-        <JournalForm active = {formActive} setActive={setFromActive} >
-          <div className="journal-form">
-            <h2 className="custom-form__title">Login</h2>
-              <form>
-              <div className="custom-form-block">
-                  <div className="select">
-                    <div className="select__header">
-                      <span className="select__current">Client name</span>
-                      <div className="select__icon">&times;</div>
-                    </div>
-                  
-                    <div className="select__body">
-                      <div className="select__item">Value 1</div>
-                      <div className="select__item">Value 2</div>
-                      <div className="select__item">Value 3</div>
-                      <div className="select__item">Value 4</div>
-                      <div className="select__item">Value 5</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="custom-form-block">
-                  <div className="select">
-                    <div className="select__header">
-                      <span className="select__current">Book name</span>
-                      <div className="select__icon">&times;</div>
-                    </div>
-                  
-                    <div className="select__body">
-                      <div className="select__item">Value 1</div>
-                      <div className="select__item">Value 2</div>
-                      <div className="select__item">Value 3</div>
-                      <div className="select__item">Value 4</div>
-                      <div className="select__item">Value 5</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="custom-form-block">
-                  <label>Begin date:</label>
-                  <input type="date" id="birthday" name="birthday" autoComplete="off" />
-                </div>
-                <div className="custom-form-block">
-                  <label>End date:</label>
-                  <input type="date" id="birthday" name="birthday" autoComplete="off" />
-                </div>
-                <div className="custom-form-block">
-                  <label>Return date:</label>
-                  <input type="date" id="birthday" name="birthday" autoComplete="off" />
-                </div>
-              </form>
-            <input type="submit" name="submit" value="Submit" onClick={() => setFromActive(false)} />
-          </div>
-          </JournalForm>
+        {/* <CustomForm active = {formActive} setActive={setFromActive} children={<JournalForm journal={} setActive={setFromActive}/>} /> */}
       </section>
       <Footer />
     </>

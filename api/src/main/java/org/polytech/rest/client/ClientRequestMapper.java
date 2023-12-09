@@ -15,4 +15,15 @@ public class ClientRequestMapper {
                 .id(request.id())
                 .build();
     }
+
+    public ClientRequest mapToClientRequest(Client request) {
+        return ClientRequest.builder()
+                .passportSeria(request.getPassportSeria())
+                .fatherName(request.getFatherName())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .passportNum(request.getPassportNum())
+                .id(request.getId())
+                .build();
+    }
 }

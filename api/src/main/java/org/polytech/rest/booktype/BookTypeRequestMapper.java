@@ -14,4 +14,14 @@ public class BookTypeRequestMapper {
                 .id(request.id())
                 .build();
     }
+
+    public BookTypeRequest mapBookTypeToRequest(BookType request) {
+        return BookTypeRequest.builder()
+                .cnt(request.getCnt())
+                .fine(request.getFine())
+                .name(request.getName())
+                .dayCount(request.getDayCount())
+                .id(request.getId())
+                .build();
+    }
 }

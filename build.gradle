@@ -1,10 +1,27 @@
-allprojects {
-    apply plugin: 'java'
-
-    group = 'org.example'
-    version = '1.0-SNAPSHOT'
-
-    repositories {
-        mavenCentral()
-    }
-}
+//group = 'com.academy.fintech'
+//version = '1.0-SNAPSHOT'
+//
+//subprojects {
+//    apply plugin: 'java'
+//
+//    group = rootProject.group
+//    version = rootProject.version
+//
+//    java {
+//        toolchain {
+//            languageVersion.set(JavaLanguageVersion.of(21))
+//        }
+//    }
+//
+//    dependencies {
+//        // You can add common dependencies here...
+//        implementation libs.spring.web
+//
+//        implementation libs.lombok
+//        annotationProcessor libs.lombok
+//    }
+//
+//    repositories {
+//        mavenCentral()
+//    }
+//}

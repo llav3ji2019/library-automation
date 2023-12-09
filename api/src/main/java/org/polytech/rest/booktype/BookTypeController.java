@@ -3,6 +3,7 @@ package org.polytech.rest.booktype;
 import lombok.RequiredArgsConstructor;
 import org.polytech.db.booktype.BookTypeService;
 import org.polytech.db.model.BookType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,25 +16,29 @@ public class BookTypeController {
     private final BookTypeRequestMapper mapper;
 
     @GetMapping("/all")
-    public List<BookType> getAllBookType() {
-        return service.getAll();
+    public ResponseEntity<List<BookTypeRequest>> getAllBookType() {
+        List<BookTypeRequest> result = service.getAll().stream().map(mapper::mapBookTypeToRequest).toList();
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/add")
-    public BookType addBookType(@RequestBody BookTypeRequest bookTypeRequest) {
+    public ResponseEntity<String> addBookType(@RequestBody BookTypeRequest bookTypeRequest) {
         BookType bookType = mapper.mapRequestToDto(bookTypeRequest);
-        return service.saveBookType(bookType);
+        service.saveBookType(bookType);
+        return ResponseEntity.ok("OK");
     }
 
     @DeleteMapping("/delete")
-    public void deleteBookType(@RequestBody BookTypeRequest bookTypeRequest) {
+    public ResponseEntity<String> deleteBookType(@RequestBody BookTypeRequest bookTypeRequest) {
         BookType bookType = mapper.mapRequestToDto(bookTypeRequest);
         service.deleteBookType(bookType);
+        return ResponseEntity.ok("OK");
     }
 
     @PutMapping("/update")
-    public BookType updateBookType(@RequestBody BookTypeRequest bookTypeRequest) {
+    public ResponseEntity<String> updateBookType(@RequestBody BookTypeRequest bookTypeRequest) {
         BookType bookType = mapper.mapRequestToDto(bookTypeRequest);
-        return service.updateBookType(bookType);
+        mapper.mapBookTypeToRequest(service.updateBookType(bookType));
+        return ResponseEntity.ok("OK");
     }
 }

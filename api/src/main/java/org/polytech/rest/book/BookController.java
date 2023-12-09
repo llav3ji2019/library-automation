@@ -3,6 +3,7 @@ package org.polytech.rest.book;
 import lombok.RequiredArgsConstructor;
 import org.polytech.db.book.BookService;
 import org.polytech.db.model.Book;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,24 +14,30 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BookRequestMapper bookRequestMapper;
+    private final BookResponseMapper bookResponseMapper;
 
     @GetMapping("/all")
-    public List<Book> getAllBook() {
-        return bookService.getAll();
+    public ResponseEntity<List<BookResponse>> getAllBook() {
+        List<BookResponse> result = bookService.getAll()
+                .stream()
+                .map(bookResponseMapper::mapToBookResponse)
+                .toList();
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/add")
-    public Book addBook(@RequestBody BookRequest bookRequest) {
-        return bookService.saveBook(bookRequestMapper.mapToBookDto(bookRequest));
+    public ResponseEntity<Book> addBook(@RequestBody BookRequest bookRequest) {
+        return ResponseEntity.ok(bookService.saveBook(bookRequestMapper.mapToBookDto(bookRequest)));
     }
 
     @DeleteMapping("/delete")
-    public void deleteBook(@RequestBody BookRequest bookRequest) {
+    public ResponseEntity<?> deleteBook(@RequestBody BookRequest bookRequest) {
         bookService.deleteBook(bookRequestMapper.mapToBookDto(bookRequest));
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/update")
-    public Book updateBook(@RequestBody BookRequest bookRequest) {
-        return bookService.updateBook(bookRequestMapper.mapToBookDto(bookRequest));
+    public ResponseEntity<Book> updateBook(@RequestBody BookRequest bookRequest) {
+        return ResponseEntity.ok(bookService.updateBook(bookRequestMapper.mapToBookDto(bookRequest)));
     }
 }

@@ -17,8 +17,12 @@ public class ClientController {
     private final ClientRequestMapper clientRequestMapper;
 
     @GetMapping("/all")
-    public List<Client> getAllClients() {
-        return clientService.getAll();
+    public ResponseEntity<List<ClientRequest>> getAllClients() {
+        List<ClientRequest> response = clientService.getAll()
+                .stream()
+                .map(clientRequestMapper::mapToClientRequest)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/add")
@@ -32,8 +36,9 @@ public class ClientController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteClient(@RequestBody ClientRequest request) {
+    public ResponseEntity<?> deleteClient(@RequestBody ClientRequest request) {
         clientService.deleteClient(clientRequestMapper.mapToClientDto(request));
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/update")

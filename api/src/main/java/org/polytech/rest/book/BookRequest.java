@@ -7,7 +7,7 @@ import lombok.Builder;
 public record BookRequest(
         long id,
         String name,
-        Integer cnt,
+        int cnt,
         @JsonProperty("type_id")
         Long typeId
 ) {

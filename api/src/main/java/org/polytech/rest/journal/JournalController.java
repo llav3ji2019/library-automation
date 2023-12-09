@@ -15,10 +15,16 @@ import java.util.List;
 public class JournalController {
     private final JournalService journalService;
     private final JournalRequestMapper journalRequestMapper;
+    private final JournalResponseMapper journalResponseMapper;
 
     @GetMapping("/all")
-    public List<Journal> getAllJournal() {
-        return journalService.getAll();
+    public ResponseEntity<List<JournalResponse>> getAllJournal() {
+        List<JournalResponse> responses = journalService.getAll()
+                .stream()
+                .map(journalResponseMapper::mapToJournalRequest)
+                .toList();
+
+        return ResponseEntity.ok(responses);
     }
 
     @PostMapping("/add")

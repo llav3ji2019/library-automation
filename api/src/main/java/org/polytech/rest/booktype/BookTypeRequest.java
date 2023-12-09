@@ -1,6 +1,9 @@
 package org.polytech.rest.booktype;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+
+@Builder
 public record BookTypeRequest (
         long id,
         String name,

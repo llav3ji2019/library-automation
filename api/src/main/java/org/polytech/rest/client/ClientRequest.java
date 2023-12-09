@@ -16,5 +16,4 @@ public record ClientRequest (
         String passportSeria,
         @JsonProperty("passport_num")
         String passportNum
-) {
-}
+) {}

@@ -16,7 +16,7 @@ public class BookService {
     }
 
     public Book updateBook(Book data) {
-        Optional<Book> bookTypeToUpdate = bookRepository.findBookByName(data.getName());
+        Optional<Book> bookTypeToUpdate = bookRepository.findBookId(data.getId());
         if (bookTypeToUpdate.isEmpty()) {
             return bookRepository.save(data);
         }
@@ -30,9 +30,5 @@ public class BookService {
 
     public Book saveBook(Book data) {
         return bookRepository.save(data);
-    }
-
-    public Book findBookByName(String name) {
-        return bookRepository.findBookByName(name).orElseThrow();
     }
 }

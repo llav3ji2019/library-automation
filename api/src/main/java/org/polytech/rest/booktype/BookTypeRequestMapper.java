@@ -11,6 +11,7 @@ public class BookTypeRequestMapper {
                 .fine(request.fine())
                 .name(request.name())
                 .dayCount(request.dayCount())
+                .id(request.id())
                 .build();
     }
 }

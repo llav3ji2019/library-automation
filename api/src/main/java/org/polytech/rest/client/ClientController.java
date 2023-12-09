@@ -34,8 +34,4 @@ public class ClientController {
     public Client updateClient(@RequestBody ClientRequest request) {
         return clientService.updateClient(clientRequestMapper.mapToClientDto(request));
     }
-
-    public Long findClient(@RequestBody ClientRequest request) {
-        return clientService.findClient(clientRequestMapper.mapToClientDto(request));
-    }
 }

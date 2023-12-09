@@ -1,7 +1,6 @@
 package org.polytech.db.journal;
 
 import lombok.RequiredArgsConstructor;
-import org.polytech.db.model.Book;
 import org.polytech.db.model.Journal;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,6 @@ public class JournalService {
     }
 
     public Journal updateJournal(Journal data) {
-        Optional<Journal> bookTypeToUpdate = journalRepository.findJournalById(data.getId());
-        if (bookTypeToUpdate.isEmpty()) {
-            return journalRepository.save(data);
-        }
-        data.setId(bookTypeToUpdate.orElseThrow().getId());
         return journalRepository.save(data);
     }
 

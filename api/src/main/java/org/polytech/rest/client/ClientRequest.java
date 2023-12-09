@@ -5,6 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record ClientRequest (
+        long id,
         @JsonProperty("first_name")
         String firstName,
         @JsonProperty("last_name")

@@ -6,10 +6,11 @@ import org.polytech.db.model.Client;
 import java.time.LocalDate;
 
 public record JournalRequest(
-        @JsonProperty("book_name")
-        String bookName,
-        @JsonProperty("client_name")
-        String clientName,
+        long id,
+        @JsonProperty("book_id")
+        long bookId,
+        @JsonProperty("client_id")
+        long clientId,
         @JsonProperty("date_beg")
         LocalDate dateBeg,
         @JsonProperty("date_end")

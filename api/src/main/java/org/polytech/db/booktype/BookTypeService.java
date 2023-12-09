@@ -17,16 +17,12 @@ public class BookTypeService {
     }
 
     public BookType updateBookType(BookType data) {
-        Optional<BookType> bookTypeToUpdate = bookTypeRepository.findBookTypeByName(data.getName());
+        Optional<BookType> bookTypeToUpdate = bookTypeRepository.findBookTypeById(data.getId());
         if (bookTypeToUpdate.isEmpty()) {
             return bookTypeRepository.save(data);
         }
         data.setId(bookTypeToUpdate.orElseThrow().getId());
         return bookTypeRepository.save(data);
-    }
-
-    public Long findBookType(String name) {
-        return bookTypeRepository.findBookTypeByName(name).orElseThrow().getId();
     }
 
     public void deleteBookType(BookType data) {

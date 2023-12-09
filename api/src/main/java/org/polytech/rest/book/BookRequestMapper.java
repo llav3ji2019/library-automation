@@ -13,7 +13,8 @@ public class BookRequestMapper {
     public Book mapToBookDto(BookRequest request) {
         return Book.builder()
                 .name(request.name())
-                .typeId(bookTypeService.findBookType(request.type()))
+                .typeId(request.typeId())
+                .id(request.id())
                 .build();
     }
 }

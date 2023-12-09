@@ -17,16 +17,12 @@ public class ClientService {
         return repository.findAll();
     }
     public Client updateClient(Client data) {
-        Optional<Client> bookTypeToUpdate = repository.findClientByPassportNumAndPassportSeria(data.getPassportNum(), data.getPassportSeria());
+        Optional<Client> bookTypeToUpdate = repository.findClientById(data.getId());
         if (bookTypeToUpdate.isEmpty()) {
             return repository.save(data);
         }
         data.setId(bookTypeToUpdate.orElseThrow().getId());
         return repository.save(data);
-    }
-
-    public Long findClient(Client data) {
-        return repository.findClientByPassportNumAndPassportSeria(data.getPassportNum(), data.getPassportSeria()).orElseThrow().getId();
     }
 
     public void deleteClient(Client data) {

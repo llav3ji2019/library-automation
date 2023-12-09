@@ -12,6 +12,7 @@ public class ClientRequestMapper {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .passportNum(request.passportNum())
+                .id(request.id())
                 .build();
     }
 }

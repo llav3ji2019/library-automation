@@ -50,7 +50,16 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
         item.addEventListener('click', selectChoose)
     });
 
-    
+    const handleChangeJournal = (newJournal: Journal) => {
+      console.log(newJournal.client_name);
+      const newList = journalList.map((item) => {
+        if (item.id === newJournal.id) {  
+          return newJournal;
+        }
+        return item;
+      });
+      setJournalList(newList);
+    }
 
   return (
     <>
@@ -69,7 +78,7 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
             </tr>
 
             {
-              journals.map((journal) => (
+              journalList.map((journal) => (
                 <tr>
                   <td>{journal.id}</td>
                   <td>{journal.book_name}</td>
@@ -81,33 +90,13 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
                     <img src="../img/edit-icon.svg" alt="edit" width="32px" height="32px"
                     onClick = {
                       () => {
-                        setFromActive(true)
                         setCurrentJournal(journal)
+                        setFromActive(true)
                         }
                       }/>
                   </td>
                   <td className="td__remove-action">
-                    <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px"
-                      onClick = {
-                        () => {
-                          setCurrentJournal(journal)
-                          axios.delete<string>(
-                            'http://localhost:8080/library/journal/delete',
-                            {
-                              headers: {
-                                Accept: 'application/json',
-                              },
-                            },
-                          ).then( response => {
-                              setJournalList(journalList.filter((el) => el !== curJournal));
-                            }
-                          ).catch(
-                            response => {
-                              alert('No rows');
-                            }
-                          )
-                          }
-                        }/>
+                    <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px" />
                   </td>
                 </tr>
               ))              
@@ -115,7 +104,8 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
             
           </table>
           <button type="submit" className="btn-add-row" onClick={() => setFromActive(true)}>Add value</button>
-          <CustomForm active = {formActive} setActive={setFromActive} children={<JournalForm books={books} clients={clients} journal={curJournal} setActive={setFromActive}/>} />
+          <CustomForm active = {formActive} setActive={setFromActive} children={<JournalForm books={books} clients={clients}
+          currentJournal={curJournal} setCurrentJournal={setCurrentJournal} setActive={setFromActive} onHandleJournal={handleChangeJournal}/>} />
       </section>
       <Footer />
     </>

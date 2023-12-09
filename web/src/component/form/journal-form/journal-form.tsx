@@ -31,7 +31,7 @@ function JournalForm({setActive, journal, clients, books}: JournalFormProps): JS
       <div className="custom-form-block">
         <div className="select">
           <div className="select__header">
-            <span className="select__current">{journal?.client_name ?? "Book name"}</span>
+            <span className="select__current">{journal?.book_name ?? "Book name"}</span>
             <div className="select__icon">&times;</div>
           </div>
         

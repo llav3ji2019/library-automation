@@ -1,8 +1,10 @@
 package org.polytech.rest.journal;
 
 import lombok.RequiredArgsConstructor;
+import org.polytech.db.exception.TriggerException;
 import org.polytech.db.journal.JournalService;
 import org.polytech.db.model.Journal;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,17 +22,32 @@ public class JournalController {
     }
 
     @PostMapping("/add")
-    public Journal addJournal(@RequestBody JournalRequest request) {
-        return journalService.saveJournal(journalRequestMapper.mapToJournalDto(request));
+    public ResponseEntity<String> addJournal(@RequestBody JournalRequest request) {
+        try {
+            Journal savedJournal = journalService.saveJournal(journalRequestMapper.mapToJournalDto(request));
+            return ResponseEntity.ok(savedJournal.toString());
+        } catch (TriggerException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete")
-    public void deleteJournal(@RequestBody JournalRequest request) {
-        journalService.deleteJournal(journalRequestMapper.mapToJournalDto(request));
+    public ResponseEntity<String> deleteJournal(@RequestBody JournalRequest request) {
+        try {
+            journalService.deleteJournal(journalRequestMapper.mapToJournalDto(request));
+            return ResponseEntity.ok().build();
+        } catch (TriggerException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/update")
-    public Journal updateJournal(@RequestBody JournalRequest request) {
-        return journalService.updateJournal(journalRequestMapper.mapToJournalDto(request));
+    public ResponseEntity<String> updateJournal(@RequestBody JournalRequest request) {
+        try {
+            Journal updatedJournal = journalService.updateJournal(journalRequestMapper.mapToJournalDto(request));
+            return ResponseEntity.ok(updatedJournal.toString());
+        } catch (TriggerException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

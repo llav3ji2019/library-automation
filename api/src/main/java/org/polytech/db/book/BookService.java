@@ -16,7 +16,7 @@ public class BookService {
     }
 
     public Book updateBook(Book data) {
-        Optional<Book> bookTypeToUpdate = bookRepository.findBookId(data.getId());
+        Optional<Book> bookTypeToUpdate = bookRepository.findBookById(data.getId());
         if (bookTypeToUpdate.isEmpty()) {
             return bookRepository.save(data);
         }

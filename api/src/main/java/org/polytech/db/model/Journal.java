@@ -33,7 +33,7 @@ public class Journal {
     private Long bookId;
 
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Book.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
     private Client client;
 
     @Column(name = "client_id")

@@ -1,6 +1,7 @@
 package org.polytech.db.client;
 
 import lombok.RequiredArgsConstructor;
+import org.polytech.db.exception.TriggerException;
 import org.polytech.db.model.BookType;
 import org.polytech.db.model.Client;
 import org.springframework.stereotype.Service;
@@ -16,20 +17,19 @@ public class ClientService {
     public List<Client> getAll() {
         return repository.findAll();
     }
-    public Client updateClient(Client data) {
-        Optional<Client> bookTypeToUpdate = repository.findClientById(data.getId());
-        if (bookTypeToUpdate.isEmpty()) {
-            return repository.save(data);
-        }
-        data.setId(bookTypeToUpdate.orElseThrow().getId());
-        return repository.save(data);
+    public Client updateClient(Client data) throws TriggerException {
+        return saveClient(data);
     }
 
     public void deleteClient(Client data) {
         repository.delete(data);
     }
 
-    public Client saveClient(Client data) {
-        return repository.save(data);
+    public Client saveClient(Client data) throws TriggerException {
+        try {
+            return repository.save(data);
+        } catch (Exception e) {
+            throw new TriggerException("Читатель с таким номером паспорта уже существует");
+        }
     }
 }

@@ -52,7 +52,7 @@ function JournalForm({setActive, journal, clients, books}: JournalFormProps): JS
       </div>
       <div className="custom-form-block">
         <label>Return date:</label>
-        <input type="date" id="birthday" name="birthday" autoComplete="off" value={journal.date_ret.toLocaleString()}/>
+        <input type="date" id="birthday" name="birthday" autoComplete="off" value={journal.date_ret?.toLocaleString() ?? ""}/>
       </div>
     </form>
     <input type="submit" name="submit" value="Submit" onClick={() => setActive(false)} />

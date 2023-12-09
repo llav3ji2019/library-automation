@@ -45,9 +45,9 @@ create or replace trigger trg_check_duplicate_passport
     for each row
 execute procedure check_date_return();
 
-update journal
-set date_ret = '2023-08-01 16:55:50.500'
-where id = 25;
+-- update journal
+-- set date_ret = '2023-08-01 16:55:50.500'
+-- where id = 24;
 
 -- Создать триггер, который при удалении строки журнала в случае, если книга
 -- не возвращена - откатывает транзакцию

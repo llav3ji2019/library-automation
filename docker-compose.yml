@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  lib-db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=lib-db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - '5438:5432'

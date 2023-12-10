@@ -42,7 +42,6 @@ function App(): JSX.Element {
         headers: {
           Accept: 'application/json',
         },
-        timeout: 50,
       },
     ).then(response => {
       setBookList( response.data );
@@ -57,7 +56,6 @@ function App(): JSX.Element {
         headers: {
           Accept: 'application/json',
         },
-        timeout: 50,
       },
     ).then(response => {
       setBookTypeList( response.data );
@@ -65,14 +63,13 @@ function App(): JSX.Element {
     }).catch((exception) => {
       console.log(exception);
   });
-  
+
     axios.get<Client[]>(
       'http://localhost:8080/library/client/all',
       {
         headers: {
           Accept: 'application/json',
         },
-        timeout: 50,
       },
     ).then(response => {
       setClientList( response.data );
@@ -80,11 +77,9 @@ function App(): JSX.Element {
     }).catch((exception) => {
       console.log(exception);
   });
-
     setShouldSend(true);
   }
   
-
   return (
     <BrowserRouter>
       <Routes>
@@ -92,7 +87,7 @@ function App(): JSX.Element {
           <Route index element={<IndexPage />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path={AppRoute.Journal} element={<JournalPage books={booklList} clients={clientList} journals={journalList.slice()}/>} />
-          <Route path={AppRoute.Handbook} element={<HandbookPage />} />
+          <Route path={AppRoute.Handbook} element={<HandbookPage books={booklList} clients={clientList} booksType = {bookTypeList}/>} />
           </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

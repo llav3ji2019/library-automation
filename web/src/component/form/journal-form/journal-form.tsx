@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, FormEvent } from "react";
 import Journal from '../../../types/journal';
 import Client from "../../../types/client";
 import Book from "../../../types/book";
@@ -13,6 +13,15 @@ type JournalFormProps = {
 }
 
 function JournalForm({setActive, setCurrentJournal, currentJournal, clients, books, onHandleJournal}: JournalFormProps): JSX.Element {
+  const handleFieldChange = (evt: FormEvent<HTMLInputElement>) => {
+    const {name, value} = evt.currentTarget;
+    setCurrentJournal({
+      ...currentJournal,
+      [name]: value
+    })
+  }
+
+
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Login</h2>
@@ -65,15 +74,15 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
       </div>
       <div className="custom-form-block">
         <label>Begin date:</label>
-        <input type="date" id="birthday" name="birthday" autoComplete="off" value={currentJournal.date_beg.toLocaleString()} />
+        <input type="date" id="date_beg" name="date_beg" autoComplete="off" value={currentJournal.date_beg.toLocaleString()} onChange={handleFieldChange} />
       </div>
       <div className="custom-form-block">
         <label>End date:</label>
-        <input type="date" id="birthday" name="birthday" autoComplete="off" value={currentJournal.date_end.toLocaleString()}/>
+        <input type="date" id="date_end" name="date_end" autoComplete="off" value={currentJournal.date_end.toLocaleString()} onChange={handleFieldChange}/>
       </div>
       <div className="custom-form-block">
         <label>Return date:</label>
-        <input type="date" id="birthday" name="birthday" autoComplete="off" value={currentJournal.date_ret?.toLocaleString() ?? ""}/>
+        <input type="date" id="date_ret" name="date_ret" autoComplete="off" value={currentJournal.date_ret?.toLocaleString() ?? ""} onChange={handleFieldChange}/>
       </div>
     </form>
     <input type="submit" name="submit" value="Submit"

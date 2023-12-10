@@ -51,14 +51,39 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
     });
 
     const handleChangeJournal = (newJournal: Journal) => {
-      console.log(newJournal.client_name);
-      const newList = journalList.map((item) => {
-        if (item.id === newJournal.id) {  
-          return newJournal;
-        }
-        return item;
-      });
-      setJournalList(newList);
+      const request = {
+        id: newJournal.id,
+        book_id: books.findIndex((book) => book.name === newJournal.book_name) + 1,
+        client_id: clients.findIndex((client) => client.last_name + " " + client.first_name + " " + client.father_name === newJournal.client_name) + 1,
+        date_beg: newJournal.date_beg,
+        date_end: newJournal.date_end,
+        date_ret: newJournal.date_ret
+      }
+
+      axios.put<string>(
+        'http://localhost:8080/library/journal/update',
+        request,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+          timeout: 50,
+        },
+      ).then(response => {
+
+        const newList = journalList.map((item) => {
+          if (item.id === newJournal.id) {  
+            return newJournal;
+          }
+          return item;
+        });
+        setJournalList(newList);
+        return response;
+      }).catch((exception) => {
+        alert(exception)
+    });
+
+      
     }
 
   return (

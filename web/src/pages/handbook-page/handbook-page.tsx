@@ -1,8 +1,11 @@
 import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
 import { useState } from 'react';
-import JournalForm from '../../component/form/journal-form/journal-form';
 import CustomForm from '../../component/form/custom-form';
+import BookType from '../../types/book-type';
+import Client from '../../types/client';
+import Book from '../../types/book';
+import HandbookTable from '../../component/handbook-table/handbook-table';
 
 function selectToggle(this: Element): void {
   this.parentElement?.classList.toggle('is-active');
@@ -16,8 +19,21 @@ function selectChoose(this: HTMLDivElement): void {
   select.classList.remove('is-active');
 }
 
-function HandbookPage(): JSX.Element {
+type HandbookPageProps = {
+  books: Book[]
+  clients: Client[]
+  booksType: BookType[]
+}
 
+export enum TableStatus {
+  CLIENT_STATE,
+  BOOK_STATE,
+  BOOK_TYPE_STATE
+}
+
+function HandbookPage({books, clients, booksType}: HandbookPageProps): JSX.Element {
+  
+  const [tableState, setTableState] = useState(TableStatus.CLIENT_STATE);
   const [formActive, setFromActive] = useState(false);
   let selectHeader = document.querySelectorAll('.select__header');
   let selectItem = document.querySelectorAll('.select__item');
@@ -29,6 +45,8 @@ function HandbookPage(): JSX.Element {
   selectItem.forEach(item => {
       item.addEventListener('click', selectChoose)
   });
+
+
   return(
     <>
       <Header />
@@ -36,48 +54,29 @@ function HandbookPage(): JSX.Element {
         <div className="section__choose-schema">
           <div className="section__switcher-of-schema" role="radiogroup">
               <label>
-                  <input className="section__radio-button" type="radio" name="switcher" value="Client" role="radio" checked />
+                  <input className="section__radio-button" type="radio" name="switcher" value="Client" role="radio" checked
+                  onClick={() => setTableState(TableStatus.CLIENT_STATE)}/>
                   <span className="section__radio-button-text">Client</span>
               </label>
           </div>
           <div className="section__switcher-of-schema">
               <label>
-                  <input className="section__radio-button" type="radio" name="switcher" value="Book" role="radio" />
+                  <input className="section__radio-button" type="radio" name="switcher" value="Book" role="radio" onClick={() => setTableState(TableStatus.BOOK_STATE)}/>
                   <span className="section__radio-button-text">Book</span>
               </label>
           </div>
           <div className="section__switcher-of-schema">
               <label>
-                  <input className="section__radio-button" type="radio" name="switcher" value="Book type" role="radio" />
+                  <input className="section__radio-button" type="radio" name="switcher" value="Book type" role="radio" onClick={() => setTableState(TableStatus.BOOK_TYPE_STATE)}/>
                   <span className="section__radio-button-text">Book type</span>
               </label>
           </div>
         </div>
 
         <table>
-          <tr>
-            <td>Id</td>
-            <td>Book Name</td>
-            <td>Client name</td>
-            <td>Date begin</td>
-            <td>Date end</td>
-            <td>Date return</td>
-            <td colSpan={2}>Actions</td>
-          </tr>
-          <tr>
-            <td>Id</td>
-            <td>Book Name</td>
-            <td>Client name</td>
-            <td>Date begin</td>
-            <td>Date end</td>
-            <td>Date return</td>
-            <td className="td__edit-action">
-              <img src="../img/edit-icon.svg" alt="edit" width="32px" height="32px" />
-            </td>
-            <td className="td__remove-action">
-              <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px" />
-            </td>
-          </tr>
+          {
+            <HandbookTable books={books} tableStatus={tableState} booksType={booksType} clients={clients}/>
+          }
         </table>
         <button type="submit" className="btn-add-row" onClick={() => setFromActive(true)}>Add value</button>
         {/* <CustomForm active = {formActive} setActive={setFromActive} children={<JournalForm journal={} setActive={setFromActive}/>} /> */}

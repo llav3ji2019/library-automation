@@ -54,7 +54,7 @@ function HandbookPage({books, clients, booksType}: HandbookPageProps): JSX.Eleme
         <div className="section__choose-schema">
           <div className="section__switcher-of-schema" role="radiogroup">
               <label>
-                  <input className="section__radio-button" type="radio" name="switcher" value="Client" role="radio" checked
+                  <input className="section__radio-button" type="radio" name="switcher" value="Client" role="radio" autoFocus
                   onClick={() => setTableState(TableStatus.CLIENT_STATE)}/>
                   <span className="section__radio-button-text">Client</span>
               </label>

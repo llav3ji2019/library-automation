@@ -21,9 +21,9 @@ public class JournalService {
         return saveJournal(data);
     }
 
-    public void deleteJournal(Journal data) throws TriggerException {
+    public void deleteJournal(long id) throws TriggerException {
         try {
-            journalRepository.deleteById(data.getId());
+            journalRepository.deleteById(id);
         } catch (Exception e) {
             throw new TriggerException("Книга не была возвращена. Транзакция отменена");
         }

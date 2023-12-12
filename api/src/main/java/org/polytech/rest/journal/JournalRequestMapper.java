@@ -13,7 +13,7 @@ public class JournalRequestMapper {
                 .dateRet(request.dateRet())
                 .dateEnd(request.dateEnd())
                 .dateBeg(request.dateBeg())
-                .bookId(request.id())
+                .bookId(request.bookId())
                 .clientId(request.clientId())
                 .id(request.id())
                 .build();

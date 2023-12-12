@@ -37,10 +37,10 @@ public class JournalController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteJournal(@RequestBody JournalRequest request) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteJournal(@PathVariable long id) {
         try {
-            journalService.deleteJournal(journalRequestMapper.mapToJournalDto(request));
+            journalService.deleteJournal(id);
             return ResponseEntity.ok().build();
         } catch (TriggerException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

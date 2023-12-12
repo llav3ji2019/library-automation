@@ -86,8 +86,8 @@ function App(): JSX.Element {
         <Route path='/' > 
           <Route index element={<IndexPage />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path={AppRoute.Journal} element={<JournalPage books={booklList} clients={clientList} journals={journalList.slice()}/>} />
-          <Route path={AppRoute.Handbook} element={<HandbookPage books={booklList} clients={clientList} booksType = {bookTypeList}/>} />
+          <Route path={AppRoute.Journal} element={<JournalPage books={booklList} clients={clientList} journals={journalList}/>} />
+          <Route path={AppRoute.Handbook} element={<HandbookPage setBookList={setBookList} setBookTypeList={setBookTypeList} setClientList={setClientList} books={booklList} clients={clientList} booksType={bookTypeList}/>} />
           </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

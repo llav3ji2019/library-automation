@@ -1,6 +1,6 @@
 import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import CustomForm from '../../component/form/custom-form';
 import BookType from '../../types/book-type';
 import Client from '../../types/client';
@@ -24,9 +24,12 @@ function selectChoose(this: HTMLDivElement): void {
 }
 
 type HandbookPageProps = {
-  books: Book[]
-  clients: Client[]
-  booksType: BookType[]
+  books: Book[];
+  clients: Client[];
+  booksType: BookType[];
+  setBookList: Dispatch<SetStateAction<Book[]>>;
+  setBookTypeList: Dispatch<SetStateAction<BookType[]>>;
+  setClientList: Dispatch<SetStateAction<Client[]>>;
 }
 
 export enum TableStatus {
@@ -35,7 +38,7 @@ export enum TableStatus {
   BOOK_TYPE_STATE
 }
 
-function HandbookPage({books, clients, booksType}: HandbookPageProps): JSX.Element {
+function HandbookPage({books, clients, booksType, setBookList, setBookTypeList, setClientList}: HandbookPageProps): JSX.Element {
   
   const defaultClient = {
     id: 0,
@@ -70,7 +73,7 @@ function HandbookPage({books, clients, booksType}: HandbookPageProps): JSX.Eleme
         timeout: 200,
       },
     ).then(response => {
-      const newList = clientList.map((item) => {
+      const newList = clients.map((item) => {
         if (item.id === newClient.id) {  
           return newClient;
         }
@@ -86,7 +89,7 @@ function HandbookPage({books, clients, booksType}: HandbookPageProps): JSX.Eleme
 const handleAddClient = (newClient: Client) => {
   const request = {
     ...newClient,
-    id: clientList.length + 2,
+    id: clients.length + 2,
   }
 
   axios.post<string>(
@@ -111,7 +114,7 @@ const handleDeleteClient = (deletedClient: Client) => {
   axios.delete<string>(
     `http://localhost:8080/library/client/delete/${deletedClient.id}`
   ).then(response => {
-    const newList = clientList.filter((item) => {
+    const newList = clients.filter((item) => {
       item.id !== deletedClient.id
     });
     setClientList(newList);
@@ -135,7 +138,7 @@ const handleChangeBookType = (newBookType: BookType) => {
       timeout: 200,
     },
   ).then(response => {
-    const newList = bookTypeList.map((item) => {
+    const newList = booksType.map((item) => {
       if (item.id === newBookType.id) {  
         return newBookType;
       }
@@ -151,7 +154,7 @@ const handleChangeBookType = (newBookType: BookType) => {
 const handleAddBookType = (newBookType: BookType) => {
 const request = {
   ...newBookType,
-  id: bookTypeList.length + 2
+  id: booksType.length + 2
 }
 
 axios.post<string>(
@@ -176,7 +179,7 @@ const handleDeleteBookType = (deletedBookType: BookType) => {
 axios.delete<string>(
   `http://localhost:8080/library/book_type/delete/${deletedBookType.id}`
 ).then(response => {
-  const newList = bookTypeList.filter((item) => {
+  const newList = booksType.filter((item) => {
     item.id !== deletedBookType.id
   });
   setBookTypeList(newList);
@@ -192,7 +195,7 @@ const handleChangeBook = (newBook: Book) => {
     id: newBook.id,
     name: newBook.name,
     cnt: newBook.cnt,
-    type_id: bookTypeList.findIndex((type) => type.name === newBook.type_name) + 1,
+    type_id: booksType.findIndex((type) => type.name === newBook.type_name) + 1,
   }    
       
   axios.put<string>(
@@ -205,7 +208,7 @@ const handleChangeBook = (newBook: Book) => {
       timeout: 200,
     },
   ).then(response => {
-    const newList = bookList.map((item) => {
+    const newList = books.map((item) => {
       if (item.id === newBook.id) {  
         return newBook;
       }
@@ -221,8 +224,8 @@ const handleChangeBook = (newBook: Book) => {
 const handleAddBook = (newBook: Book) => {
 const request = {
   ...newBook,
-  id: bookList.length + 2,
-  book_id: bookTypeList.findIndex((type) => type.name === newBook.type_name) + 1,
+  id: books.length + 2,
+  book_id: booksType.findIndex((type) => type.name === newBook.type_name) + 1,
 }
 
 axios.post<string>(
@@ -248,7 +251,7 @@ const handleDeleteBook = (deletedBook: Book) => {
 axios.delete<string>(
   `http://localhost:8080/library/book/delete/${deletedBook.id}`
 ).then(response => {
-  const newList = bookList.filter((item) => {
+  const newList = books.filter((item) => {
     item.id !== deletedBook.id
   });
   setBookList(newList);
@@ -259,20 +262,17 @@ axios.delete<string>(
 });
 }
 
-  const [clientList, setClientList] = useState<Client[]>(clients);
   const [curClient, setCurrentClient] = useState<Client>(defaultClient);
   const [isClientUpdateMethod, setIsClientUpdateMethod] = useState(true);
 
-  const [bookList, setBookList] = useState<Book[]>(books);
   const [curBook, setCurrentBook] = useState<Book>(defaultBook);
   const [isBookUpdateMethod, setIsBookUpdateMethod] = useState(true);
 
-  const [bookTypeList, setBookTypeList] = useState<BookType[]>(booksType);
   const [curBookType, setCurrentBookType] = useState<BookType>(defaultBookType);
   const [isBookTypeUpdateMethod, setIsBookTypeUpdateMethod] = useState(true);
 
   useEffect(() => {
-    if (bookTypeList.length === 0) {
+    if (booksType.length === 0) {
       setBookTypeList(booksType);
       setClientList(clients);
       setBookList(books);
@@ -321,7 +321,7 @@ axios.delete<string>(
 
         <table>
           {
-            <HandbookTable books={bookList} tableStatus={tableState} booksType={bookTypeList} clients={clientList}
+            <HandbookTable books={books} tableStatus={tableState} booksType={booksType} clients={clients}
             setIsBookTypeUpdateMethod={setIsBookTypeUpdateMethod} setIsBookUpdateMethod={setIsBookUpdateMethod} setIsClientUpdateMethod={setIsClientUpdateMethod} setFormActive={setFromActive} setCurrentClient={setCurrentClient} setCurrentBookType={setCurrentBookType} setCurrentBook = {setCurrentBook} handleDeleteBook={handleDeleteBook} handleDeleteBookType={handleDeleteBookType} handleDeleteClient={handleDeleteClient}/>
           }
         </table>

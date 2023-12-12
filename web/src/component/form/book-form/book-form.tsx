@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, FormEvent } from "react";
 import BookType from '../../../types/book-type';
 import Book from "../../../types/book";
 import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
+import BookTypesList from "./book-types-list/book-types-list";
 
 type BookFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -33,20 +34,7 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
             <span className="select__current">{currentBook?.type_name ?? "Type name"}</span>
             <div className="select__icon">&times;</div>
           </div>
-          <div className="select__body">
-          {
-            bookTypes.map(el => (
-            <div className="select__item" 
-            onClick={() => {
-              setCurrentBook({
-                ...currentBook,
-                type_name: el.name
-              });
-            }}>
-              {el.name}
-            </div>))
-          }
-          </div>
+          <BookTypesList currentBook={currentBook} setCurrentBook={setCurrentBook} bookTypes={bookTypes} />
         </div>
       </div>
       <div className="custom-form-block">

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TableStatus } from "../../pages/handbook-page/handbook-page";
+import { TableStatus } from '../../const';
 import Book from "../../types/book";
 import BookType from '../../types/book-type';
 import Client from "../../types/client";

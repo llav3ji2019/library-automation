@@ -10,6 +10,7 @@ import ClientForm from '../../component/form/client-form/client-form';
 import BookForm from '../../component/form/book-form/book-form';
 import BookTypeForm from '../../component/form/book-type-form/book-type-form';
 import axios from 'axios';
+import { TableStatus } from '../../const';
 
 function selectToggle(this: Element): void {
   this.parentElement?.classList.toggle('is-active');
@@ -30,12 +31,6 @@ type HandbookPageProps = {
   setBookList: Dispatch<SetStateAction<Book[]>>;
   setBookTypeList: Dispatch<SetStateAction<BookType[]>>;
   setClientList: Dispatch<SetStateAction<Client[]>>;
-}
-
-export enum TableStatus {
-  CLIENT_STATE,
-  BOOK_STATE,
-  BOOK_TYPE_STATE
 }
 
 function HandbookPage({books, clients, booksType, setBookList, setBookTypeList, setClientList}: HandbookPageProps): JSX.Element {

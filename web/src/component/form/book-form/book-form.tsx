@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, FormEvent } from "react";
 import BookType from '../../../types/book-type';
 import Book from "../../../types/book";
+import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
 
 type BookFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -12,15 +13,6 @@ type BookFormProps = {
   isBookUpdateMethod: boolean
 }
 
-function selectToggle(this: Element): void {
-  this.parentElement?.classList.add('is-active');
- }
-
-function selectChoose(this: HTMLDivElement): void {
-  let select = this.closest('.select') as HTMLDivElement;
-  select.classList.remove('is-active');
-}
-
 function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook, onChangeBook, isBookUpdateMethod}: BookFormProps): JSX.Element {
   const handleFieldChange = (evt: FormEvent<HTMLInputElement>) => {
     const {name, value} = evt.currentTarget;
@@ -29,12 +21,8 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
       [name]: value
     })
   }
+  addListenersToDropDownList(document);
 
-  let selectHeader = document.querySelector('.select__header');
-  let selectItem = document.querySelector('.select__item');
-  selectHeader?.addEventListener('click', selectToggle);
-
-  selectItem?.addEventListener('click', selectChoose);
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Book Form</h2>

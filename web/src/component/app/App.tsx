@@ -7,10 +7,10 @@ import HandbookPage from '../../pages/handbook-page/handbook-page';
 import Error404 from '../../pages/error-404/error-404';
 import { useState } from 'react';
 import Journal from '../../types/journal';
-import axios from 'axios';
 import Book from '../../types/book';
 import BookType from '../../types/book-type';
 import Client from '../../types/client';
+import { getAllBookTypes, getAllBooks, getAllClients, getAllJournals } from '../../http-requests/http-requests';
 
 function App(): JSX.Element {
 
@@ -21,62 +21,10 @@ function App(): JSX.Element {
   const [shouldSend, setShouldSend] = useState<boolean>(false);
 
   if (!shouldSend) {
-    axios.get<Journal[]>(
-      'http://localhost:8080/library/journal/all',
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    ).then(response => {
-      setJournalList( response.data );
-      return response;
-    }).catch((exception) => {
-      console.log(exception);
-    });;
-  
-  
-    axios.get<Book[]>(
-      'http://localhost:8080/library/book/all',
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    ).then(response => {
-      setBookList( response.data );
-      return response;
-    }).catch((exception) => {
-      console.log(exception);
-  });
-  
-    axios.get<BookType[]>(
-      'http://localhost:8080/library/book_type/all',
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    ).then(response => {
-      setBookTypeList( response.data );
-      return response;
-    }).catch((exception) => {
-      console.log(exception);
-  });
-
-    axios.get<Client[]>(
-      'http://localhost:8080/library/client/all',
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      },
-    ).then(response => {
-      setClientList( response.data );
-      return response;
-    }).catch((exception) => {
-      console.log(exception);
-  });
+    getAllJournals(setJournalList);
+    getAllClients(setClientList);
+    getAllBooks(setBookList);
+    getAllBookTypes(setBookTypeList);
     setShouldSend(true);
   }
   

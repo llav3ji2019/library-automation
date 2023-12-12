@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, FormEvent } from "react";
 import Journal from '../../../types/journal';
 import Client from "../../../types/client";
 import Book from "../../../types/book";
+import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
 
 type JournalFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -14,15 +15,6 @@ type JournalFormProps = {
   isJournalUpdateMethod: boolean
 }
 
-function selectToggle(this: Element): void {
-  this.parentElement?.classList.toggle('is-active');
- }
-
-function selectChoose(this: HTMLDivElement): void {
-  let select = this.closest('.select') as HTMLDivElement;
-  select.classList.remove('is-active');
-}
-
 function JournalForm({setActive, setCurrentJournal, currentJournal, clients, books, onAddJournal, onChangeJournal, isJournalUpdateMethod}: JournalFormProps): JSX.Element {
   const handleFieldChange = (evt: FormEvent<HTMLInputElement>) => {
     const {name, value} = evt.currentTarget;
@@ -32,16 +24,7 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
     })
   }
 
-  let selectHeader = document.querySelectorAll('.select__header');
-  let selectItem = document.querySelectorAll('.select__item');
-
-  selectHeader.forEach(item => {
-      item.addEventListener('click', selectToggle)
-  });
-
-  selectItem.forEach(item => {
-      item.addEventListener('click', selectChoose)
-  });
+  addListenersToDropDownList(document);
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Journal Form</h2>

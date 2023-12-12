@@ -79,7 +79,7 @@ function HandbookPage({books, clients, booksType}: HandbookPageProps): JSX.Eleme
       setClientList(newList);
       return response;
     }).catch((exception) => {
-      alert(exception)
+      alert("Читатель с таким номером паспорта уже существует")
     });    
 }
 
@@ -103,11 +103,11 @@ const handleAddClient = (newClient: Client) => {
     window.location.reload();
     return response;
   }).catch((exception) => {
-    alert(exception)
+    alert("Читатель с таким номером паспорта уже существует")
   });
 }
 
-const handleDeleteClient = (deletedClient: Client) => {
+const handleDeleteClient = (deletedClient: Client) => { 
   axios.delete<string>(
     `http://localhost:8080/library/client/delete/${deletedClient.id}`
   ).then(response => {
@@ -118,7 +118,7 @@ const handleDeleteClient = (deletedClient: Client) => {
     window.location.reload();
     return response;
   }).catch((error) => {
-    alert("Книга не была возвращена. Транзакция отменена.");
+    alert(error);
   });
 }
 
@@ -183,7 +183,7 @@ axios.delete<string>(
   window.location.reload();
   return response;
 }).catch((error) => {
-  alert("Книга не была возвращена. Транзакция отменена.");
+  alert(error);
 });
 }
 
@@ -255,7 +255,7 @@ axios.delete<string>(
   window.location.reload();
   return response;
 }).catch((error) => {
-  alert("Книга не была возвращена. Транзакция отменена.");
+  alert(error);
 });
 }
 

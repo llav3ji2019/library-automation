@@ -21,8 +21,8 @@ public class ClientService {
         return saveClient(data);
     }
 
-    public void deleteClient(Client data) {
-        repository.delete(data);
+    public void deleteClient(long id) {
+        repository.deleteById(id);
     }
 
     public Client saveClient(Client data) throws TriggerException {

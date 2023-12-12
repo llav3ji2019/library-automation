@@ -28,10 +28,9 @@ public class BookTypeController {
         return ResponseEntity.ok("OK");
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteBookType(@RequestBody BookTypeRequest bookTypeRequest) {
-        BookType bookType = mapper.mapRequestToDto(bookTypeRequest);
-        service.deleteBookType(bookType);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBookType(@PathVariable long id) {
+        service.deleteBookType(id);
         return ResponseEntity.ok("OK");
     }
 

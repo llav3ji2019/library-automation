@@ -18,7 +18,8 @@ public class BookController {
 
     @GetMapping("/all")
     public ResponseEntity<List<BookResponse>> getAllBook() {
-        List<BookResponse> result = bookService.getAll()
+        List<Book> books = bookService.getAll();
+        List<BookResponse> result = books
                 .stream()
                 .map(bookResponseMapper::mapToBookResponse)
                 .toList();
@@ -30,9 +31,9 @@ public class BookController {
         return ResponseEntity.ok(bookService.saveBook(bookRequestMapper.mapToBookDto(bookRequest)));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteBook(@RequestBody BookRequest bookRequest) {
-        bookService.deleteBook(bookRequestMapper.mapToBookDto(bookRequest));
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable long id) {
+        bookService.deleteBook(id);
         return ResponseEntity.ok().build();
     }
 

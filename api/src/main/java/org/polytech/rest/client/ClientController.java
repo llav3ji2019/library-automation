@@ -36,8 +36,8 @@ public class ClientController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteClient(@RequestBody ClientRequest request) {
-        clientService.deleteClient(clientRequestMapper.mapToClientDto(request));
+    public ResponseEntity<?> deleteClient(@PathVariable long id) {
+        clientService.deleteClient(id);
         return ResponseEntity.ok().build();
     }
 

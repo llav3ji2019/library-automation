@@ -25,8 +25,8 @@ public class BookTypeService {
         return bookTypeRepository.save(data);
     }
 
-    public void deleteBookType(BookType data) {
-        bookTypeRepository.delete(data);
+    public void deleteBookType(long id) {
+        bookTypeRepository.deleteById(id);
     }
 
     public BookType saveBookType(BookType data) {

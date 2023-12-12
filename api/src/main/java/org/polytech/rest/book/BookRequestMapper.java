@@ -15,6 +15,7 @@ public class BookRequestMapper {
                 .name(request.name())
                 .typeId(request.typeId())
                 .id(request.id())
+                .cnt(request.cnt())
                 .build();
     }
 }

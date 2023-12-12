@@ -1,6 +1,6 @@
 import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
-import { useState, useEffect } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import CustomForm from '../../component/form/custom-form';
 import JournalForm from '../../component/form/journal-form/journal-form';
 import Journal from '../../types/journal';
@@ -11,10 +11,11 @@ import Book from '../../types/book';
 type JournalPageProps = {
   journals: Journal[],
   clients: Client[],
-  books: Book[]
+  books: Book[];
+  setJournals: Dispatch<SetStateAction<Journal[]>>
 }
 
-function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element {
+function JournalPage({journals, clients, books, setJournals} : JournalPageProps):JSX.Element {
   const defaultJournal = {
     id: 0,
     book_name: "Book name",
@@ -25,15 +26,8 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
   }
 
   const [formActive, setFromActive] = useState(false);
-  const [journalList, setJournalList] = useState<Journal[]>(journals);
   const [curJournal, setCurrentJournal] = useState<Journal>(defaultJournal);
   const [isJournalUpdateMethod, setIsJournalUpdateMethod] = useState(true);
-
-  useEffect(() => {
-    if (journalList.length === 0) {
-      setJournalList(journals);
-    }
-  });
   
   const handleChangeJournal = (newJournal: Journal) => {
       const request = {
@@ -55,13 +49,13 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
           timeout: 200,
         },
       ).then(response => {
-        const newList = journalList.map((item) => {
+        const newList = journals.map((item) => {
           if (item.id === newJournal.id) {  
             return newJournal;
           }
           return item;
         });
-        setJournalList(newList);
+        setJournals(newList);
         return response;
       }).catch((exception) => {
         alert(exception)
@@ -70,7 +64,7 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
 
   const handleAddJournal = (newJournal: Journal) => {
     const request = {
-      id: journalList.length + 2,
+      id: journals.length + 2,
       book_id: books.findIndex((book) => book.name === newJournal.book_name) + 1,
       client_id: clients.findIndex((client) => client.last_name + " " + client.first_name + " " + client.father_name === newJournal.client_name) + 1,
       date_beg: newJournal.date_beg,
@@ -89,7 +83,7 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
       },
     ).then(response => {
       const newListElement = {...newJournal, id: request.id}
-      setJournalList(oldJournalList => [...oldJournalList, newListElement]);
+      setJournals(oldjournals => [...oldjournals, newListElement]);
       window.location.reload();
       return response;
     }).catch((exception) => {
@@ -102,10 +96,10 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
     axios.delete<string>(
       `http://localhost:8080/library/journal/delete/${deletedJournal.id}`
     ).then(response => {
-      const newList = journalList.filter((item) => {
+      const newList = journals.filter((item) => {
         item.id !== deletedJournal.id
       });
-      setJournalList(newList);
+      setJournals(newList);
       window.location.reload();
       return response;
     }).catch((error) => {
@@ -129,7 +123,7 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
               <td colSpan={2}>Actions</td>
             </tr>
             {
-              journalList.map((journal) => (
+              journals.map((journal) => (
                 <tr>
                   <td>{journal.id}</td>
                   <td>{journal.book_name}</td>

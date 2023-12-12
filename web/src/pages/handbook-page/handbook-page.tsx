@@ -1,6 +1,6 @@
 import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import CustomForm from '../../component/form/custom-form';
 import BookType from '../../types/book-type';
 import Client from '../../types/client';
@@ -271,14 +271,6 @@ axios.delete<string>(
   const [curBookType, setCurrentBookType] = useState<BookType>(defaultBookType);
   const [isBookTypeUpdateMethod, setIsBookTypeUpdateMethod] = useState(true);
 
-  useEffect(() => {
-    if (booksType.length === 0) {
-      setBookTypeList(booksType);
-      setClientList(clients);
-      setBookList(books);
-    }
-  });
-
   const [tableState, setTableState] = useState(TableStatus.CLIENT_STATE);
   const [formActive, setFromActive] = useState(false);
   let selectHeader = document.querySelectorAll('.select__header');
@@ -291,7 +283,6 @@ axios.delete<string>(
   selectItem.forEach(item => {
       item.addEventListener('click', selectChoose)
   });
-
 
   return(
     <>

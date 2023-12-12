@@ -3,6 +3,8 @@ import Journal from '../../../types/journal';
 import Client from "../../../types/client";
 import Book from "../../../types/book";
 import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
+import BookField from "./book-field/book-field";
+import ClientField from "./client-field/client-field";
 
 type JournalFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -29,52 +31,10 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
   <div className="journal-form">
     <h2 className="custom-form__title">Journal Form</h2>
     <form>
-      <div className="custom-form-block">
-        <div className="select">
-          <div className="select__header">
-            <span className="select__current">{currentJournal?.client_name ?? "Client name"}</span>
-            <div className="select__icon">&times;</div>
-          </div>
-          <div className="select__body">
-          {
-            clients.map(el => (
-            <div className="select__item" 
-            onClick={() => {
-              setCurrentJournal({
-                ...currentJournal,
-                client_name: el.last_name + " " + el.first_name + " " + el.father_name
-              });
-            }}>
-              {el.last_name + " " + el.first_name + " " + el.father_name}
-            </div>))
-          }
-          </div>
-        </div>
-      </div>
-      <div className="custom-form-block">
-        <div className="select">
-          <div className="select__header">
-            <span className="select__current">{currentJournal?.book_name ?? "Book name"}</span>
-            <div className="select__icon">&times;</div>
-          </div>
-        
-          <div className="select__body">
-          {
-            books.map(
-              el => (<div className="select__item" onClick={() => {
-                setCurrentJournal({
-                  ...currentJournal,
-                  book_name: el.name
-                })
-              }}>
-              {el.name}
-              </div>
-              )
-            )
-          }
-          </div>
-        </div>
-      </div>
+      <ClientField setCurrentJournal={setCurrentJournal} currentJournal={currentJournal} clients={clients} />
+
+      <BookField setCurrentJournal={setCurrentJournal} currentJournal={currentJournal} books={books} />
+      
       <div className="custom-form-block">
         <label>Begin date:</label>
         <input type="date" id="date_beg" name="date_beg" autoComplete="off" value={currentJournal?.date_beg.toLocaleString() ?? ""} onChange={handleFieldChange} />

@@ -1,24 +1,12 @@
 import Header from '../../component/header/header';
 import Footer from '../../component/footer/footer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CustomForm from '../../component/form/custom-form';
 import JournalForm from '../../component/form/journal-form/journal-form';
 import Journal from '../../types/journal';
 import axios from 'axios';
 import Client from '../../types/client';
 import Book from '../../types/book';
-
-function selectToggle(this: Element): void {
-  this.parentElement?.classList.toggle('is-active');
- }
-
-function selectChoose(this: HTMLDivElement): void {
-  let text = this.innerText,
-      select = this.closest('.select') as HTMLDivElement,
-      currentText = select.querySelector('.select__current') as HTMLDivElement;
-  currentText.innerText = text;
-  select.classList.remove('is-active');
-}
 
 type JournalPageProps = {
   journals: Journal[],
@@ -35,22 +23,19 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
     date_end:  new Date("2023-01-01"),
     date_ret:  new Date("2023-01-01")
   }
-  const [formActive, setFromActive] = useState(false);
-  const [journalList, setJournalList] = useState(journals);
-  const [curJournal, setCurrentJournal] = useState(defaultJournal);
-  
-  let selectHeader = document.querySelectorAll('.select__header');
-    let selectItem = document.querySelectorAll('.select__item');
-  
-    selectHeader.forEach(item => {
-        item.addEventListener('click', selectToggle)
-    });
-  
-    selectItem.forEach(item => {
-        item.addEventListener('click', selectChoose)
-    });
 
-    const handleChangeJournal = (newJournal: Journal) => {
+  const [formActive, setFromActive] = useState(false);
+  const [journalList, setJournalList] = useState<Journal[]>(journals);
+  const [curJournal, setCurrentJournal] = useState<Journal>(defaultJournal);
+  const [isJournalUpdateMethod, setIsJournalUpdateMethod] = useState(true);
+
+  useEffect(() => {
+    if (journalList.length === 0) {
+      setJournalList(journals);
+    }
+  });
+  
+  const handleChangeJournal = (newJournal: Journal) => {
       const request = {
         id: newJournal.id,
         book_id: books.findIndex((book) => book.name === newJournal.book_name) + 1,
@@ -58,8 +43,8 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
         date_beg: newJournal.date_beg,
         date_end: newJournal.date_end,
         date_ret: newJournal.date_ret
-      }
-
+      }    
+          
       axios.put<string>(
         'http://localhost:8080/library/journal/update',
         request,
@@ -67,10 +52,9 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
           headers: {
             Accept: 'application/json',
           },
-          timeout: 50,
+          timeout: 200,
         },
       ).then(response => {
-
         const newList = journalList.map((item) => {
           if (item.id === newJournal.id) {  
             return newJournal;
@@ -81,10 +65,53 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
         return response;
       }).catch((exception) => {
         alert(exception)
-    });
+      });    
+  }
 
-      
+  const handleAddJournal = (newJournal: Journal) => {
+    const request = {
+      id: journalList.length + 2,
+      book_id: books.findIndex((book) => book.name === newJournal.book_name) + 1,
+      client_id: clients.findIndex((client) => client.last_name + " " + client.first_name + " " + client.father_name === newJournal.client_name) + 1,
+      date_beg: newJournal.date_beg,
+      date_end: newJournal.date_end,
+      date_ret: newJournal.date_ret
     }
+
+    axios.post<string>(
+      'http://localhost:8080/library/journal/add',
+      request,
+      {
+        headers: {
+          Accept: 'application/json',
+        },
+        timeout: 200,
+      },
+    ).then(response => {
+      const newListElement = {...newJournal, id: request.id}
+      setJournalList(oldJournalList => [...oldJournalList, newListElement]);
+      window.location.reload();
+      return response;
+    }).catch((exception) => {
+      alert(exception)
+    });
+  }
+
+  const handleDeleteJournal = (deletedJournal: Journal) => {
+    console.log(deletedJournal.id)
+    axios.delete<string>(
+      `http://localhost:8080/library/journal/delete/${deletedJournal.id}`
+    ).then(response => {
+      const newList = journalList.filter((item) => {
+        item.id !== deletedJournal.id
+      });
+      setJournalList(newList);
+      window.location.reload();
+      return response;
+    }).catch((error) => {
+      alert("Книга не была возвращена. Транзакция отменена.");
+    });
+  }
 
   return (
     <>
@@ -101,7 +128,6 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
               <td >Actions</td>
               <td colSpan={2}>Actions</td>
             </tr>
-
             {
               journalList.map((journal) => (
                 <tr>
@@ -110,17 +136,23 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
                   <td>{journal.client_name}</td>
                   <td>{journal.date_beg.toLocaleString()}</td>
                   <td>{journal.date_end.toLocaleString()}</td>
-                  <td>{journal.date_end.toLocaleString()}</td>
+                  <td>{journal.date_ret?.toLocaleString() ?? ""}</td>
                   <td className="td__edit-action">
                     <img src="../img/edit-icon.svg" alt="edit" width="32px" height="32px"
                     onClick = {
                       () => {
-                        setCurrentJournal(journal)
-                        setFromActive(true)
+                        setIsJournalUpdateMethod(true);
+                        setCurrentJournal(journal);
+                        setFromActive(true);
                         }
                       }/>
                   </td>
-                  <td className="td__remove-action">
+                  <td className="td__remove-action" onClick = {
+                      () => {
+                        setCurrentJournal(journal);
+                        handleDeleteJournal(journal);
+                        }
+                      }>
                     <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px" />
                   </td>
                 </tr>
@@ -128,9 +160,13 @@ function JournalPage({journals, clients, books} : JournalPageProps):JSX.Element 
             }
             
           </table>
-          <button type="submit" className="btn-add-row" onClick={() => setFromActive(true)}>Add value</button>
+          <button type="submit" className="btn-add-row" onClick={() => {
+            setIsJournalUpdateMethod(false);
+            setFromActive(true);
+            }}>Add value</button>
           <CustomForm active = {formActive} setActive={setFromActive} children={<JournalForm books={books} clients={clients}
-          currentJournal={curJournal} setCurrentJournal={setCurrentJournal} setActive={setFromActive} onHandleJournal={handleChangeJournal}/>} />
+          currentJournal={curJournal} setCurrentJournal={setCurrentJournal} setActive={setFromActive} onAddJournal={handleAddJournal}
+          onChangeJournal= {handleChangeJournal} isJournalUpdateMethod = {isJournalUpdateMethod}/>} />
       </section>
       <Footer />
     </>

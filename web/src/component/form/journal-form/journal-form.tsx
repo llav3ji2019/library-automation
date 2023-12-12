@@ -9,10 +9,21 @@ type JournalFormProps = {
   currentJournal: Journal,
   clients: Client[],
   books: Book[],
-  onHandleJournal: (journal: Journal) => void
+  onAddJournal: (journal: Journal) => void,
+  onChangeJournal: (journal: Journal) => void,
+  isJournalUpdateMethod: boolean
 }
 
-function JournalForm({setActive, setCurrentJournal, currentJournal, clients, books, onHandleJournal}: JournalFormProps): JSX.Element {
+function selectToggle(this: Element): void {
+  this.parentElement?.classList.toggle('is-active');
+ }
+
+function selectChoose(this: HTMLDivElement): void {
+  let select = this.closest('.select') as HTMLDivElement;
+  select.classList.remove('is-active');
+}
+
+function JournalForm({setActive, setCurrentJournal, currentJournal, clients, books, onAddJournal, onChangeJournal, isJournalUpdateMethod}: JournalFormProps): JSX.Element {
   const handleFieldChange = (evt: FormEvent<HTMLInputElement>) => {
     const {name, value} = evt.currentTarget;
     setCurrentJournal({
@@ -21,7 +32,16 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
     })
   }
 
+  let selectHeader = document.querySelectorAll('.select__header');
+  let selectItem = document.querySelectorAll('.select__item');
 
+  selectHeader.forEach(item => {
+      item.addEventListener('click', selectToggle)
+  });
+
+  selectItem.forEach(item => {
+      item.addEventListener('click', selectChoose)
+  });
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Login</h2>
@@ -40,7 +60,7 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
               setCurrentJournal({
                 ...currentJournal,
                 client_name: el.last_name + " " + el.first_name + " " + el.father_name
-              })
+              });
             }}>
               {el.last_name + " " + el.first_name + " " + el.father_name}
             </div>))
@@ -74,21 +94,26 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
       </div>
       <div className="custom-form-block">
         <label>Begin date:</label>
-        <input type="date" id="date_beg" name="date_beg" autoComplete="off" value={currentJournal.date_beg.toLocaleString()} onChange={handleFieldChange} />
+        <input type="date" id="date_beg" name="date_beg" autoComplete="off" value={currentJournal?.date_beg.toLocaleString() ?? ""} onChange={handleFieldChange} />
       </div>
       <div className="custom-form-block">
         <label>End date:</label>
-        <input type="date" id="date_end" name="date_end" autoComplete="off" value={currentJournal.date_end.toLocaleString()} onChange={handleFieldChange}/>
+        <input type="date" id="date_end" name="date_end" autoComplete="off" value={currentJournal?.date_end.toLocaleString() ?? ""} onChange={handleFieldChange}/>
       </div>
       <div className="custom-form-block">
         <label>Return date:</label>
-        <input type="date" id="date_ret" name="date_ret" autoComplete="off" value={currentJournal.date_ret?.toLocaleString() ?? ""} onChange={handleFieldChange}/>
+        <input type="date" id="date_ret" name="date_ret" autoComplete="off" value={currentJournal?.date_ret?.toLocaleString() ?? ""} onChange={handleFieldChange}/>
       </div>
     </form>
     <input type="submit" name="submit" value="Submit"
     onClick={() => {
       setActive(false);
-      onHandleJournal(currentJournal);
+      if (isJournalUpdateMethod) {
+        onChangeJournal(currentJournal);
+      }
+      else {
+        onAddJournal(currentJournal);
+      }
       }
     } />
   </div>

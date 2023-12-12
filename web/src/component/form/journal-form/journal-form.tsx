@@ -44,9 +44,9 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
   });
   return (
   <div className="journal-form">
-    <h2 className="custom-form__title">Login</h2>
+    <h2 className="custom-form__title">Journal Form</h2>
     <form>
-    <div className="custom-form-block">
+      <div className="custom-form-block">
         <div className="select">
           <div className="select__header">
             <span className="select__current">{currentJournal?.client_name ?? "Client name"}</span>

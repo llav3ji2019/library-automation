@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { TableStatus } from "../../pages/handbook-page/handbook-page";
 import Book from "../../types/book";
 import BookType from '../../types/book-type';
@@ -7,11 +8,21 @@ type HandbookTableProps = {
   tableStatus: TableStatus,
   books: Book[],
   clients: Client[],
-  booksType: BookType[]
+  booksType: BookType[],
+  setFormActive: Dispatch<SetStateAction<boolean>>,
+  setIsBookUpdateMethod: Dispatch<SetStateAction<boolean>>,
+  setIsClientUpdateMethod: Dispatch<SetStateAction<boolean>>,
+  setIsBookTypeUpdateMethod: Dispatch<SetStateAction<boolean>>;
+  setCurrentBook: Dispatch<SetStateAction<Book>>,
+  setCurrentBookType: Dispatch<SetStateAction<BookType>>,
+  setCurrentClient: Dispatch<SetStateAction<Client>>,
+  handleDeleteClient: (newClient: Client) => void,
+  handleDeleteBookType: (newBookType: BookType) => void,
+  handleDeleteBook: (newBook: Book) => void,
 }
 
 
-function HandbookTable({tableStatus, books, booksType, clients}: HandbookTableProps): JSX.Element {
+function HandbookTable({tableStatus, books, booksType, clients, setCurrentBook, setCurrentBookType, setCurrentClient, setFormActive, setIsBookUpdateMethod, setIsBookTypeUpdateMethod, setIsClientUpdateMethod, handleDeleteClient, handleDeleteBook, handleDeleteBookType }: HandbookTableProps): JSX.Element {
   if (tableStatus === TableStatus.CLIENT_STATE) {
     return (
       <>
@@ -33,10 +44,19 @@ function HandbookTable({tableStatus, books, booksType, clients}: HandbookTablePr
                 <td>{client.father_name}</td>
                 <td>{client.passport_seria}</td>
                 <td>{client.passport_num}</td>
-                <td className="td__edit-action">
+                <td className="td__edit-action" onClick={() => {
+                  setIsClientUpdateMethod(true);
+                  setCurrentClient(client);
+                  setFormActive(true);
+                }}>
                   <img src="../img/edit-icon.svg" alt="edit" width="32px" height="32px" />
                 </td>
-                <td className="td__remove-action">
+                <td className="td__remove-action" onClick = {
+                      () => {
+                        setCurrentClient(client);
+                        handleDeleteClient(client);
+                        }
+                      }>
                   <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px" />
                 </td>
               </tr>
@@ -61,10 +81,19 @@ function HandbookTable({tableStatus, books, booksType, clients}: HandbookTablePr
                 <td>{book.name}</td>
                 <td>{book.cnt}</td>
                 <td>{book.type_name}</td>
-                <td className="td__edit-action">
+                <td className="td__edit-action" onClick={() => {
+                  setIsBookUpdateMethod(true);
+                  setCurrentBook(book);
+                  setFormActive(true);
+                }}>
                   <img src="../img/edit-icon.svg" alt="edit" width="32px" height="32px" />
                 </td>
-                <td className="td__remove-action">
+                <td className="td__remove-action" onClick = {
+                      () => {
+                        setCurrentBook(book);
+                        handleDeleteBook(book);
+                        }
+                      }>
                   <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px" />
                 </td>
               </tr>
@@ -91,10 +120,19 @@ function HandbookTable({tableStatus, books, booksType, clients}: HandbookTablePr
               <td>{type.name}</td>
               <td>{type.fine}</td>
               <td>{type.day_count}</td>
-              <td className="td__edit-action">
+              <td className="td__edit-action" onClick={() => {
+                  setIsBookTypeUpdateMethod(true);
+                  setCurrentBookType(type);
+                  setFormActive(true);
+                }}>
                 <img src="../img/edit-icon.svg" alt="edit" width="32px" height="32px" />
               </td>
-              <td className="td__remove-action">
+              <td className="td__remove-action" onClick = {
+                      () => {
+                        setCurrentBookType(type);
+                        handleDeleteBookType(type);
+                        }
+                      }>
                 <img src="../img/remove-icon.svg" alt="remove" width="32px" height="32px" />
               </td>
             </tr>

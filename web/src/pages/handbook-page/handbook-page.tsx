@@ -12,18 +12,6 @@ import BookTypeForm from '../../component/form/book-type-form/book-type-form';
 import axios from 'axios';
 import { TableStatus } from '../../const';
 
-function selectToggle(this: Element): void {
-  this.parentElement?.classList.toggle('is-active');
- }
-
-function selectChoose(this: HTMLDivElement): void {
-  let text = this.innerText,
-      select = this.closest('.select') as HTMLDivElement,
-      currentText = select.querySelector('.select__current') as HTMLDivElement;
-  currentText.innerText = text;
-  select.classList.remove('is-active');
-}
-
 type HandbookPageProps = {
   books: Book[];
   clients: Client[];
@@ -268,16 +256,6 @@ axios.delete<string>(
 
   const [tableState, setTableState] = useState(TableStatus.CLIENT_STATE);
   const [formActive, setFromActive] = useState(false);
-  let selectHeader = document.querySelectorAll('.select__header');
-  let selectItem = document.querySelectorAll('.select__item');
-
-  selectHeader.forEach(item => {
-      item.addEventListener('click', selectToggle)
-  });
-
-  selectItem.forEach(item => {
-      item.addEventListener('click', selectChoose)
-  });
 
   return(
     <>

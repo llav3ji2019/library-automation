@@ -54,7 +54,8 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
             return newJournal;
           }
           return item;
-        });
+        }).sort((l, r) => l.id - r.id);
+
         setJournals(newList);
         return response;
       }).catch((exception) => {
@@ -82,7 +83,7 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
         timeout: 200,
       },
     ).then(response => {
-      const newListElement = {...newJournal, id: request.id}
+      const newListElement = {...newJournal, id: request.id};
       setJournals(oldjournals => [...oldjournals, newListElement]);
       window.location.reload();
       return response;
@@ -92,13 +93,12 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
   }
 
   const handleDeleteJournal = (deletedJournal: Journal) => {
-    console.log(deletedJournal.id)
     axios.delete<string>(
       `http://localhost:8080/library/journal/delete/${deletedJournal.id}`
     ).then(response => {
       const newList = journals.filter((item) => {
         item.id !== deletedJournal.id
-      });
+      }).sort((l, r) => l.id - r.id);
       setJournals(newList);
       window.location.reload();
       return response;

@@ -14,7 +14,7 @@ export function getAllJournals(setJournalList: Dispatch<SetStateAction<Journal[]
       },
     },
   ).then(response => {
-    setJournalList( response.data );
+    setJournalList( response.data.sort((l, r) => l.id - r.id) );
     return response;
   }).catch((exception) => {
     console.log(exception);
@@ -30,7 +30,7 @@ export function getAllBooks(setBookList: Dispatch<SetStateAction<Book[]>>) {
       },
     },
   ).then(response => {
-    setBookList( response.data );
+    setBookList( response.data.sort((l, r) => l.id - r.id) );
     return response;
   }).catch((exception) => {
     console.log(exception);
@@ -46,7 +46,7 @@ export function getAllBookTypes(setBookTypeList: Dispatch<SetStateAction<BookTyp
       },
     },
   ).then(response => {
-    setBookTypeList( response.data );
+    setBookTypeList( response.data.sort((l, r) => l.id - r.id) );
     return response;
   }).catch((exception) => {
     console.log(exception);
@@ -62,7 +62,7 @@ export function getAllClients(setClientList: Dispatch<SetStateAction<Client[]>>)
       },
     },
   ).then(response => {
-    setClientList( response.data );
+    setClientList( response.data.sort((l, r) => l.id - r.id) );
     return response;
   }).catch((exception) => {
     console.log(exception);

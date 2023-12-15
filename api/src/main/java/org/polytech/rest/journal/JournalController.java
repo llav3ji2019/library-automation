@@ -56,4 +56,24 @@ public class JournalController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/statistic/book/amount/{clientId}")
+    public ResponseEntity<Long> findClientBookAmount(@PathVariable long clientId) {
+        return ResponseEntity.ok(journalService.findClientBookAmount(clientId));
+    }
+
+    @GetMapping("/statistic/fine/biggest")
+    public ResponseEntity<Long> findTheBiggestFine() {
+        return ResponseEntity.ok(journalService.findTheBiggestFine());
+    }
+
+    @GetMapping("/statistic/fine/sum/{clientId}")
+    public ResponseEntity<Long> findClientFine(@PathVariable long clientId) {
+        return ResponseEntity.ok(journalService.findClientFine(clientId));
+    }
+
+    @GetMapping("/statistic/popular_book/name")
+    public ResponseEntity<List<String>> findMostPopularBooksNames() {
+        return ResponseEntity.ok(journalService.findMostPopularBooksNames());
+    }
 }

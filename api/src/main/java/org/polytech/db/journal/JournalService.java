@@ -3,6 +3,8 @@ package org.polytech.db.journal;
 import lombok.RequiredArgsConstructor;
 import org.polytech.db.exception.TriggerException;
 import org.polytech.db.model.Journal;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +37,21 @@ public class JournalService {
         } catch (Exception e) {
             throw new TriggerException("Читатель с таким номером паспорта уже существует");
         }
+    }
+
+    public long findClientBookAmount(long clientId) {
+        return journalRepository.findBookAmount(clientId);
+    }
+
+    public long findTheBiggestFine() {
+        return journalRepository.findTheBiggestFine();
+    }
+
+    public long findClientFine(long clientId) {
+        return journalRepository.findClientFine(clientId);
+    }
+
+    public List<String> findMostPopularBooksNames() {
+        return journalRepository.findMostPopularBooksNames();
     }
 }

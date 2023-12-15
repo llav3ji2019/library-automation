@@ -90,3 +90,77 @@ $$
 
 
 select * from max_book_day_counter('Программист-прагматик: ваш путь к мастерству');
+
+
+
+
+
+
+-- Количество книг у клиента
+CREATE OR REPLACE FUNCTION clientBookCounter(in clientId bigint, out book_amount integer)
+as $$
+select count(*)
+from journal j
+         left join clients c2 on j.client_id = c2.id
+where j.date_ret is NULL
+    and c2.id = clientId;
+$$
+    LANGUAGE sql;
+
+--     ⦁	Размер штрафа заданного клиента.
+CREATE OR REPLACE FUNCTION clientFineCounter(in clientId bigint, out fine integer)
+as $$
+select sum(EXTRACT(DAY FROM (age(localtimestamp(3), j.date_end))) * (select bt.fine
+                                                                     from books b
+                                                                              left join book_types bt on b.type_id = bt.id
+                                                                     where b.id = j.book_id)) as sum
+from journal j
+         left join clients c
+                   on j.client_id = c.id
+where j.date_ret is NULL
+  and EXTRACT (DAY FROM (age(localtimestamp(3)
+    , j.date_end))) >= 0
+  and c.id = clientId;
+$$
+    LANGUAGE sql;
+
+
+
+
+
+--     ⦁	Размер самого большого штрафа
+CREATE OR REPLACE FUNCTION biggestFineCounter(out fine integer)
+as $$
+select sum(EXTRACT(DAY FROM (age(localtimestamp(3), j.date_end))) * (select bt.fine
+                                                                     from books b
+                                                                              left join book_types bt on b.type_id = bt.id
+                                                                     where b.id = j.book_id)) as sum
+from journal j
+where j.date_ret is NULL
+  and EXTRACT (DAY FROM (age(localtimestamp(3)
+    , j.date_end))) >= 0
+group by j.client_id
+order by sum desc
+limit 1;
+$$
+    LANGUAGE sql;
+
+
+--     ⦁	Три самые популярные книги
+CREATE OR REPLACE FUNCTION mostPopularBook()
+    returns table
+            (
+                book_name varchar(50),
+                book_amount numeric
+            )
+as $$
+select b.name, count(*) as book_counter
+from journal j
+         left join books b on j.book_id = b.id
+group by b.name
+order by book_counter DESC, b.name
+limit 3;
+$$
+    LANGUAGE sql;
+
+select book_name from mostPopularBook();

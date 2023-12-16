@@ -22,6 +22,11 @@ create or replace trigger trg_check_duplicate_passport
     for each row
 execute function check_duplicate_passport();
 
+create or replace trigger trg_update_check_duplicate_passport
+    before update on clients
+    for each row
+execute function check_duplicate_passport();
+
 -- insert into clients (first_name, last_name, pather_name, passport_seria, passport_num)
 -- values ('aaa', 'aaaa', 'aaa', '1234', '123456');
 
@@ -40,7 +45,7 @@ end;
 $$
     language plpgsql;
 
-create or replace trigger trg_check_duplicate_passport
+create or replace trigger trg_check_date_return
     before update of date_ret on journal
     for each row
 execute procedure check_date_return();
@@ -71,3 +76,24 @@ create or replace trigger check_book_return_trigger
 execute function check_book_return();
 
 -- delete from journal where id = 21;
+
+create or replace function check_books_exists()
+    returns trigger as
+$$
+begin
+    if EXISTS (
+        select *
+        from books
+        where books.id = new.book_id and books.cnt = 0
+    ) THEN
+        raise exception 'Таких книг нет на складе';
+    end if;
+    return new;
+end;
+$$
+    language plpgsql;
+
+create or replace trigger trg_check_books_exists
+    before insert on journal
+    for each row
+execute function check_books_exists();

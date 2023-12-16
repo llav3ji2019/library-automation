@@ -64,9 +64,9 @@ function HandbookPage({books, clients, booksType, setBookList, setBookTypeList, 
       });
       setClientList(newList);
       return response;
-    }).catch((exception) => {
-      alert("Читатель с таким номером паспорта уже существует")
-    });    
+    }).catch((error) => {
+      alert(error.response.data);
+    });  
 }
 
 const handleAddClient = (newClient: Client) => {
@@ -88,8 +88,8 @@ const handleAddClient = (newClient: Client) => {
     setClientList(oldClientList => [...oldClientList, request]);
     window.location.reload();
     return response;
-  }).catch((exception) => {
-    alert("Читатель с таким номером паспорта уже существует")
+  }).catch((error) => {
+    alert(error.response.data);
   });
 }
 
@@ -104,7 +104,7 @@ const handleDeleteClient = (deletedClient: Client) => {
     window.location.reload();
     return response;
   }).catch((error) => {
-    alert(error);
+    alert(error.response.data);
   });
 }
 
@@ -129,9 +129,9 @@ const handleChangeBookType = (newBookType: BookType) => {
     });
     setBookTypeList(newList);
     return response;
-  }).catch((exception) => {
-    alert(exception)
-  });    
+  }).catch((error) => {
+    alert(error.response.data);
+  });  
 }
 
 const handleAddBookType = (newBookType: BookType) => {
@@ -153,8 +153,8 @@ axios.post<string>(
   setBookTypeList(oldBookTypeList => [...oldBookTypeList, request]);
   window.location.reload();
   return response;
-}).catch((exception) => {
-  alert(exception)
+}).catch((error) => {
+  alert(error.response.data);
 });
 }
 
@@ -169,7 +169,7 @@ axios.delete<string>(
   window.location.reload();
   return response;
 }).catch((error) => {
-  alert(error);
+  alert(error.response.data);
 });
 }
 
@@ -199,9 +199,9 @@ const handleChangeBook = (newBook: Book) => {
     });
     setBookList(newList);
     return response;
-  }).catch((exception) => {
-    alert(exception)
-  });    
+  }).catch((error) => {
+    alert(error.response.data);
+  });  
 }
 
 const handleAddBook = (newBook: Book) => {
@@ -225,8 +225,8 @@ axios.post<string>(
   setBookList(oldBookList => [...oldBookList, newListElement]);
   window.location.reload();
   return response;
-}).catch((exception) => {
-  alert(exception)
+}).catch((error) => {
+  alert(error.response.data);
 });
 }
 
@@ -241,7 +241,7 @@ axios.delete<string>(
   window.location.reload();
   return response;
 }).catch((error) => {
-  alert(error);
+  alert(error.response.data);
 });
 }
 

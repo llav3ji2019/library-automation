@@ -59,9 +59,9 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
 
         setJournals(newList);
         return response;
-      }).catch((exception) => {
-        alert(exception)
-      });    
+      }).catch((error) => {
+        alert(error.response.data);
+      });  
   }
 
   const handleAddJournal = (newJournal: Journal) => {
@@ -88,8 +88,8 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
       setJournals(oldjournals => [...oldjournals, newListElement]);
       window.location.reload();
       return response;
-    }).catch((exception) => {
-      alert('Таких книг нет на складе');
+    }).catch((error) => {
+      alert(error.response.data);
     });
   }
 
@@ -104,7 +104,7 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
       window.location.reload();
       return response;
     }).catch((error) => {
-      alert("Книга не была возвращена. Транзакция отменена.");
+      alert(error.response.data);
     });
   }
 

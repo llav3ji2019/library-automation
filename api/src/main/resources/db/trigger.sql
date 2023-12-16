@@ -97,3 +97,29 @@ create or replace trigger trg_check_books_exists
     before insert on journal
     for each row
 execute function check_books_exists();
+
+
+create or replace function check_books_amount()
+    returns trigger as
+$$
+begin
+    if (
+        select count(*)
+        from journal
+        where journal.client_id = new.client_id and journal.date_ret IS NULL
+        group by journal.client_id
+    ) >= 10 THEN
+        raise exception 'Верните книги прежде чем брать новую';
+    end if;
+    return new;
+end;
+$$
+    language plpgsql;
+
+create or replace trigger trg_check_books_amount
+    before insert on journal
+    for each row
+execute function check_books_amount();
+
+-- insert into journal(book_id, client_id, date_beg, date_end)
+-- values (14,1, '2023-12-01 13:54:50.570', '2024-02-02 6:00:00.200');

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestController
 @RequestMapping("/library/journal")
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class JournalController {
             Journal savedJournal = journalService.saveJournal(journalRequestMapper.mapToJournalDto(request));
             return ResponseEntity.ok(savedJournal.toString());
         } catch (TriggerException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -43,7 +45,7 @@ public class JournalController {
             journalService.deleteJournal(id);
             return ResponseEntity.ok().build();
         } catch (TriggerException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -53,7 +55,7 @@ public class JournalController {
             Journal updatedJournal = journalService.updateJournal(journalRequestMapper.mapToJournalDto(request));
             return ResponseEntity.ok(updatedJournal.toString());
         } catch (TriggerException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(NOT_FOUND).body(e.getMessage());
         }
     }
 

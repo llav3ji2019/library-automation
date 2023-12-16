@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestController
 @RequestMapping("/library/client")
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class ClientController {
             ;Client savedClient = clientService.saveClient(clientRequestMapper.mapToClientDto(request));
             return ResponseEntity.ok(savedClient.toString());
         } catch (TriggerException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -47,7 +49,7 @@ public class ClientController {
             Client updateClient = clientService.updateClient(clientRequestMapper.mapToClientDto(request));
             return ResponseEntity.ok(updateClient.toString());
         } catch (TriggerException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(NOT_FOUND).body(e.getMessage());
         }
     }
 }

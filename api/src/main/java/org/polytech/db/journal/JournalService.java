@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.polytech.db.utils.exceptionutils.ExceptionUtils.getClientError;
+
 @Service
 @RequiredArgsConstructor
 public class JournalService {
@@ -24,7 +26,7 @@ public class JournalService {
         try {
             journalRepository.deleteById(id);
         } catch (Exception e) {
-            throw new TriggerException("Книга не была возвращена. Транзакция отменена");
+            throw new TriggerException(getClientError(e.getMessage()));
         }
     }
 
@@ -32,7 +34,7 @@ public class JournalService {
         try {
             return journalRepository.save(data);
         } catch (Exception e) {
-            throw new TriggerException("Читатель с таким номером паспорта уже существует");
+            throw new TriggerException(getClientError(e.getMessage()));
         }
     }
 

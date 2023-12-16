@@ -12,15 +12,18 @@ import BookType from '../../types/book-type';
 import Client from '../../types/client';
 import { getAllBookTypes, getAllBooks, getAllClients, getAllJournals } from '../../http-requests/http-requests';
 import ReportPage from '../../pages/report-page/report-page';
+import { AuthorizationStatus } from '../../const';
+import WorkerPrivateRoute from '../private-route/worker-privar-route';
+import AdminPrivateRoute from '../private-route/admin-private-route';
 
 function App(): JSX.Element {
-
+  const [loginStatus, setLoginStatus] = useState(AuthorizationStatus.Unknown);
   const [journalList, setJournalList] = useState<Journal[]>([]);
   const [booklList, setBookList] = useState<Book[]>([]);
   const [bookTypeList, setBookTypeList] = useState<BookType[]>([]);
   const [clientList, setClientList] = useState<Client[]>([]);
   const [shouldSend, setShouldSend] = useState<boolean>(false);
-
+  
   if (!shouldSend) {
     getAllJournals(setJournalList);
     getAllClients(setClientList);
@@ -33,11 +36,30 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path='/' > 
-          <Route index element={<IndexPage />} />
-          <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path={AppRoute.Report} element={<ReportPage clientList={clientList} />} />
-          <Route path={AppRoute.Journal} element={<JournalPage setJournals={setJournalList} books={booklList} clients={clientList} journals={journalList}/>} />
-          <Route path={AppRoute.Handbook} element={<HandbookPage setBookList={setBookList} setBookTypeList={setBookTypeList} setClientList={setClientList} books={booklList} clients={clientList} booksType={bookTypeList}/>} />
+          <Route index element={
+            <WorkerPrivateRoute authorizationStatus={loginStatus}>
+              <IndexPage />
+            </WorkerPrivateRoute>            
+          } />
+          <Route path={AppRoute.Login} element={<LoginPage loginStatus = {loginStatus} setLoginStatus={setLoginStatus}/>} />
+          <Route path={AppRoute.Handbook} element={
+            <AdminPrivateRoute authorizationStatus={loginStatus}>
+              <HandbookPage setBookList={setBookList} setBookTypeList={setBookTypeList} setClientList={setClientList} books={booklList}
+                clients={clientList} booksType={bookTypeList}/>
+            </AdminPrivateRoute>            
+          } />
+
+          <Route path={AppRoute.Report} element={
+            <AdminPrivateRoute authorizationStatus={loginStatus}>
+              <ReportPage clientList={clientList} />
+            </AdminPrivateRoute>            
+          } />
+
+          <Route path={AppRoute.Journal} element={
+            <WorkerPrivateRoute authorizationStatus={loginStatus}>
+              <JournalPage setJournals={setJournalList} books={booklList} clients={clientList} journals={journalList}/>
+            </WorkerPrivateRoute>            
+          } />
           </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

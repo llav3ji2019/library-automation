@@ -58,8 +58,8 @@ public class JournalController {
     }
 
     @GetMapping("/statistic/book/amount/{clientId}")
-    public ResponseEntity<Long> findClientBookAmount(@PathVariable long clientId) {
-        return ResponseEntity.ok(journalService.findClientBookAmount(clientId));
+    public long findClientBookAmount(@PathVariable long clientId) {
+        return journalService.findClientBookAmount(clientId);
     }
 
     @GetMapping("/statistic/fine/biggest")
@@ -68,8 +68,8 @@ public class JournalController {
     }
 
     @GetMapping("/statistic/fine/sum/{clientId}")
-    public ResponseEntity<Long> findClientFine(@PathVariable long clientId) {
-        return ResponseEntity.ok(journalService.findClientFine(clientId));
+    public long findClientFine(@PathVariable long clientId) {
+        return journalService.findClientFine(clientId);
     }
 
     @GetMapping("/statistic/popular_book/name")

@@ -11,13 +11,13 @@ import java.util.Optional;
 
 public interface JournalRepository extends JpaRepository<Journal, Long> {
     @Query(value = "select * from clientBookCounter(:client_id)", nativeQuery = true)
-    long findBookAmount(@Param("client_id") long clientId);
+    Optional<Long> findBookAmount(@Param("client_id") long clientId);
 
     @Query(value = "select * from biggestFineCounter()", nativeQuery = true)
-    long findTheBiggestFine();
+    Optional<Long> findTheBiggestFine();
 
     @Query(value = "select * from clientFineCounter(:client_id)", nativeQuery = true)
-    long findClientFine(@Param("client_id") long clientId);
+    Optional<Long> findClientFine(@Param("client_id") long clientId);
 
     @Query(value = "select book_name from mostPopularBook();", nativeQuery = true)
     List<String> findMostPopularBooksNames();

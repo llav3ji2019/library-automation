@@ -11,26 +11,36 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class LoginService {
-    private final Map<String, String> AUTHORIZED_USERS = Map.of(
-            "admin", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
-            "oleg", "uy/u1fkKPQKnxw30g1+f8BMKhhtyY+m7LNEt945+2bw="
+    private final static String HASH_CODE_ALGORITHM = "SHA-256";
+
+    private final Map<String, String> ADMIN_AUTHORIZED_USERS = Map.of(
+            "admin", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=" //admin
+    );
+
+    private final Map<String, String> WORKER_AUTHORIZED_USERS = Map.of(
+            "oleg", "PCCSzTEdCaqlT7Z/Q2nztTIlTAMREarxIT1y6r6L2Ps=" //oleg123
     );
 
     public LoginStatus checkUser(User user) {
-        String regularPassword = AUTHORIZED_USERS.get(user.username());
-        if (regularPassword == null) {
-            return LoginStatus.FAILED;
+        String adminPassword = ADMIN_AUTHORIZED_USERS.get(user.username());
+        String workerPassword = WORKER_AUTHORIZED_USERS.get(user.username());
+        if (adminPassword == null && workerPassword == null) {
+            return LoginStatus.UNKNOWN;
         }
+
         try {
-            return regularPassword.equals(hashCode(user.password())) ? LoginStatus.SUCCESS: LoginStatus.FAILED;
+            if (adminPassword != null) {
+                return adminPassword.equals(hashCode(user.password())) ? LoginStatus.ADMIN: LoginStatus.UNKNOWN;
+            }
+            return workerPassword.equals(hashCode(user.password())) ? LoginStatus.WORKER : LoginStatus.UNKNOWN;
         }
         catch (NoSuchAlgorithmException e) {
-            return LoginStatus.FAILED;
+            return LoginStatus.UNKNOWN;
         }
     }
 
     private static String hashCode(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        MessageDigest md = MessageDigest.getInstance(HASH_CODE_ALGORITHM);
         byte[] hash = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hash);
     }

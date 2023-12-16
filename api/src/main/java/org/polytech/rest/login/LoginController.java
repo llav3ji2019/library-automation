@@ -17,7 +17,7 @@ public class LoginController {
     private final LoginRequestMapper loginRequestMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginStatus> checkUser(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(loginService.checkUser(loginRequestMapper.convertToUser(request)));
+    public ResponseEntity<String> checkUser(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(loginService.checkUser(loginRequestMapper.convertToUser(request)).name());
     }
 }

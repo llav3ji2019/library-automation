@@ -10,7 +10,7 @@ begin
         from clients
         where passport_num = new.passport_num
     ) THEN
-        raise exception 'Читатель с таким номером паспорта уже существует';
+        raise exception 'Читатель с таким номером паспорта уже существует.';
     end if;
     return new;
 end;
@@ -38,7 +38,7 @@ create or replace function check_date_return()
 $$
 begin
     if (select journal.date_beg from journal where journal.id = new.id) > new.date_ret THEN
-        raise exception 'Date is incorrect';
+        raise exception 'Date is incorrect.';
     end if;
     return new;
 end;
@@ -86,7 +86,7 @@ begin
         from books
         where books.id = new.book_id and books.cnt = 0
     ) THEN
-        raise exception 'Таких книг нет на складе';
+        raise exception 'Таких книг нет на складе.';
     end if;
     return new;
 end;
@@ -109,7 +109,7 @@ begin
         where journal.client_id = new.client_id and journal.date_ret IS NULL
         group by journal.client_id
     ) >= 10 THEN
-        raise exception 'Верните книги прежде чем брать новую';
+        raise exception 'Верните книги прежде чем брать новую.';
     end if;
     return new;
 end;

@@ -86,10 +86,10 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
     ).then(response => {
       const newListElement = {...newJournal, id: request.id};
       setJournals(oldjournals => [...oldjournals, newListElement]);
-      // window.location.reload();
+      window.location.reload();
       return response;
     }).catch((exception) => {
-      alert(exception)
+      alert('Таких книг нет на складе');
     });
   }
 
@@ -101,7 +101,7 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
         item.id !== deletedJournal.id
       }).sort((l, r) => l.id - r.id);
       setJournals(newList);
-      // window.location.reload();
+      window.location.reload();
       return response;
     }).catch((error) => {
       alert("Книга не была возвращена. Транзакция отменена.");

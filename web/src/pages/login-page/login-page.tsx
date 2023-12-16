@@ -3,6 +3,7 @@ import { AuthorizationStatus } from "../../const";
 import { useState, FormEvent, Dispatch, SetStateAction } from "react";
 import {useNavigate} from 'react-router-dom';
 import { AppRoute } from "../../const";
+import { saveToken } from "../../token/token";
 
 type LoginPageProps = {
   loginStatus: AuthorizationStatus,
@@ -28,12 +29,16 @@ function LoginPage({loginStatus, setLoginStatus}: LoginPageProps): JSX.Element {
     },
   ).then(response => {
     if (response.data === AuthorizationStatus.Admin) {
+      saveToken(AuthorizationStatus.Admin);
       setLoginStatus(AuthorizationStatus.Admin);
     } else if (response.data === AuthorizationStatus.Worker) {
+      saveToken(AuthorizationStatus.Worker);
       setLoginStatus(AuthorizationStatus.Worker);
     } else {
       setLoginStatus(AuthorizationStatus.Unknown);
+      saveToken(AuthorizationStatus.Unknown);
     }
+    
     return response;
   }).catch((exception) => {
     console.log(exception);

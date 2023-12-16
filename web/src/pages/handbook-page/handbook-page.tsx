@@ -86,7 +86,7 @@ const handleAddClient = (newClient: Client) => {
     },
   ).then(response => {
     setClientList(oldClientList => [...oldClientList, request]);
-    // window.location.reload();
+    window.location.reload();
     return response;
   }).catch((exception) => {
     alert("Читатель с таким номером паспорта уже существует")
@@ -101,7 +101,7 @@ const handleDeleteClient = (deletedClient: Client) => {
       item.id !== deletedClient.id
     });
     setClientList(newList);
-    // window.location.reload();
+    window.location.reload();
     return response;
   }).catch((error) => {
     alert(error);
@@ -151,7 +151,7 @@ axios.post<string>(
   },
 ).then(response => {
   setBookTypeList(oldBookTypeList => [...oldBookTypeList, request]);
-  // window.location.reload();
+  window.location.reload();
   return response;
 }).catch((exception) => {
   alert(exception)
@@ -166,7 +166,7 @@ axios.delete<string>(
     item.id !== deletedBookType.id
   });
   setBookTypeList(newList);
-  // window.location.reload();
+  window.location.reload();
   return response;
 }).catch((error) => {
   alert(error);
@@ -223,7 +223,7 @@ axios.post<string>(
 ).then(response => {
   const newListElement = {...newBook, id: request.id}
   setBookList(oldBookList => [...oldBookList, newListElement]);
-  // window.location.reload();
+  window.location.reload();
   return response;
 }).catch((exception) => {
   alert(exception)
@@ -238,7 +238,7 @@ axios.delete<string>(
     item.id !== deletedBook.id
   });
   setBookList(newList);
-  // window.location.reload();
+  window.location.reload();
   return response;
 }).catch((error) => {
   alert(error);

@@ -12,12 +12,12 @@ import BookType from '../../types/book-type';
 import Client from '../../types/client';
 import { getAllBookTypes, getAllBooks, getAllClients, getAllJournals } from '../../http-requests/http-requests';
 import ReportPage from '../../pages/report-page/report-page';
-import { AuthorizationStatus } from '../../const';
 import WorkerPrivateRoute from '../private-route/worker-privar-route';
 import AdminPrivateRoute from '../private-route/admin-private-route';
+import { getToken } from '../../token/token';
 
 function App(): JSX.Element {
-  const [loginStatus, setLoginStatus] = useState(AuthorizationStatus.Unknown);
+  const [loginStatus, setLoginStatus] = useState(getToken());
   const [journalList, setJournalList] = useState<Journal[]>([]);
   const [booklList, setBookList] = useState<Book[]>([]);
   const [bookTypeList, setBookTypeList] = useState<BookType[]>([]);

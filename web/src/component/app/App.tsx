@@ -11,6 +11,7 @@ import Book from '../../types/book';
 import BookType from '../../types/book-type';
 import Client from '../../types/client';
 import { getAllBookTypes, getAllBooks, getAllClients, getAllJournals } from '../../http-requests/http-requests';
+import ReportPage from '../../pages/report-page/report-page';
 
 function App(): JSX.Element {
 
@@ -34,6 +35,7 @@ function App(): JSX.Element {
         <Route path='/' > 
           <Route index element={<IndexPage />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
+          <Route path={AppRoute.Report} element={<ReportPage clientList={clientList} />} />
           <Route path={AppRoute.Journal} element={<JournalPage setJournals={setJournalList} books={booklList} clients={clientList} journals={journalList}/>} />
           <Route path={AppRoute.Handbook} element={<HandbookPage setBookList={setBookList} setBookTypeList={setBookTypeList} setClientList={setClientList} books={booklList} clients={clientList} booksType={bookTypeList}/>} />
           </Route>

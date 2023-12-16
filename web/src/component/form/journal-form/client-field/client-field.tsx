@@ -1,6 +1,7 @@
 import Journal from '../../../../types/journal';
 import { Dispatch, SetStateAction } from 'react';
 import Client from '../../../../types/client';
+import { getFullName } from '../../../../utils/client-utils';
 
 type ClientFieldProps = {
   setCurrentJournal: Dispatch<SetStateAction<Journal>>,
@@ -23,10 +24,10 @@ function ClientField({clients, setCurrentJournal, currentJournal} : ClientFieldP
         onClick={() => {
           setCurrentJournal({
             ...currentJournal,
-            client_name: el.last_name + " " + el.first_name + " " + el.father_name
+            client_name: getFullName(el)
           });
         }}>
-          {el.last_name + " " + el.first_name + " " + el.father_name}
+          {getFullName(el)}
         </div>))
       }
       </div>

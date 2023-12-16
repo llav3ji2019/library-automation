@@ -7,6 +7,7 @@ import Journal from '../../types/journal';
 import axios from 'axios';
 import Client from '../../types/client';
 import Book from '../../types/book';
+import { getFullName } from '../../utils/client-utils';
 
 type JournalPageProps = {
   journals: Journal[],
@@ -33,7 +34,7 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
       const request = {
         id: newJournal.id,
         book_id: books.findIndex((book) => book.name === newJournal.book_name) + 1,
-        client_id: clients.findIndex((client) => client.last_name + " " + client.first_name + " " + client.father_name === newJournal.client_name) + 1,
+        client_id: clients.findIndex((client) => getFullName(client) === newJournal.client_name) + 1,
         date_beg: newJournal.date_beg,
         date_end: newJournal.date_end,
         date_ret: newJournal.date_ret
@@ -67,7 +68,7 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
     const request = {
       id: journals.length + 2,
       book_id: books.findIndex((book) => book.name === newJournal.book_name) + 1,
-      client_id: clients.findIndex((client) => client.last_name + " " + client.first_name + " " + client.father_name === newJournal.client_name) + 1,
+      client_id: clients.findIndex((client) => getFullName(client) === newJournal.client_name) + 1,
       date_beg: newJournal.date_beg,
       date_end: newJournal.date_end,
       date_ret: newJournal.date_ret

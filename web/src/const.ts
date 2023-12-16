@@ -3,7 +3,7 @@ export enum AppRoute {
   Login = '/login',
   Journal = '/journal',
   Handbook = '/handbook',
-  Report = '/player'
+  Report = '/report'
 }
 
 export enum AuthorizationStatus {

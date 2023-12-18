@@ -49,6 +49,7 @@
 * Hibernate ORM
 * SQL
 * PostgreSQL
+* Swagger
 
 ### Схема бд
 ![library_schema.png](img%2Flibrary_schema.png)

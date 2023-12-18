@@ -5,12 +5,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 @Builder
+@Schema(description = "Данные запроса читателя")
 public record ClientRequest (
         @Schema(description = "Индетификатор для читателя", example = "123")
         long id,
 
-        @Schema(description = "Имя читателя", example = "Олег")
         @JsonProperty("first_name")
+        @Schema(description = "Имя читателя", example = "Олег")
         String firstName,
         @JsonProperty("last_name")
         @Schema(description = "Фамилия читателя", example = "Попов")

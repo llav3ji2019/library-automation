@@ -8,6 +8,7 @@ import org.polytech.db.model.Client;
 import java.time.LocalDate;
 
 @Builder
+@Schema(description = "Данные запроса записи журнала")
 public record JournalRequest(
         @Schema(description = "Индетификатор записи журнала", example = "12345")
         long id,

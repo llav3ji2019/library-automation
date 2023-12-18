@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 @Builder
+@Schema(description = "Данные запроса типа книги")
 public record BookTypeRequest (
         @Schema(description = "Индетификатор типа книги", example = "13")
         long id,

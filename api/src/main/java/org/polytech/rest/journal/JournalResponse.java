@@ -7,6 +7,7 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
+@Schema(description = "Данные ответа записи журнала")
 public record JournalResponse(
         @JsonProperty("id")
         @Schema(description = "Индетификатор записи журнала", example = "12345")

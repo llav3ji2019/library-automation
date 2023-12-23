@@ -37,15 +37,15 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
       
       <div className="custom-form-block">
         <label>Begin date:</label>
-        <input type="date" id="date_beg" name="date_beg" autoComplete="off" value={currentJournal?.date_beg.toLocaleString() ?? ""} onChange={handleFieldChange} />
+        <input type="date" id="date_beg" name="date_beg" autoComplete="off" defaultValue={currentJournal.date_beg.toLocaleString() || ""} onChange={handleFieldChange} />
       </div>
       <div className="custom-form-block">
         <label>End date:</label>
-        <input type="date" id="date_end" name="date_end" autoComplete="off" value={currentJournal?.date_end.toLocaleString() ?? ""} onChange={handleFieldChange}/>
+        <input type="date" id="date_end" name="date_end" autoComplete="off" defaultValue={currentJournal.date_end.toLocaleString() || ""} onChange={handleFieldChange}/>
       </div>
       <div className="custom-form-block">
         <label>Return date:</label>
-        <input type="date" id="date_ret" name="date_ret" autoComplete="off" value={currentJournal?.date_ret?.toLocaleString() ?? ""} onChange={handleFieldChange}/>
+        <input type="date" id="date_ret" name="date_ret" autoComplete="off" defaultValue={currentJournal.date_ret?.toLocaleString() || ""} onChange={handleFieldChange}/>
       </div>
     </form>
     <input type="submit" name="submit" value="Submit"

@@ -14,7 +14,7 @@ function ClientField({clients, setCurrentJournal, currentJournal} : ClientFieldP
     <div className="custom-form-block">
     <div className="select">
       <div className="select__header">
-        <span className="select__current">{currentJournal?.client_name ?? "Client name"}</span>
+        <span className="select__current">{currentJournal.client_name || "Client name"}</span>
         <div className="select__icon">&times;</div>
       </div>
       <div className="select__body">

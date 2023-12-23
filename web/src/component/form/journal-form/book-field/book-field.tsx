@@ -13,7 +13,7 @@ function BookField({books, setCurrentJournal, currentJournal} : BookFieldProps):
     <div className="custom-form-block">
     <div className="select">
       <div className="select__header">
-        <span className="select__current">{currentJournal?.book_name ?? "Book name"}</span>
+        <span className="select__current">{currentJournal.book_name || "Book name"}</span>
         <div className="select__icon">&times;</div>
       </div>
     

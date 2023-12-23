@@ -5,7 +5,7 @@ import JournalPage from '../../pages/journal-page/journal-page';
 import LoginPage from '../../pages/login-page/login-page';
 import HandbookPage from '../../pages/handbook-page/handbook-page';
 import Error404 from '../../pages/error-404/error-404';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Journal from '../../types/journal';
 import Book from '../../types/book';
 import BookType from '../../types/book-type';
@@ -22,16 +22,18 @@ function App(): JSX.Element {
   const [booklList, setBookList] = useState<Book[]>([]);
   const [bookTypeList, setBookTypeList] = useState<BookType[]>([]);
   const [clientList, setClientList] = useState<Client[]>([]);
-  
+  const isRenderedRef = useRef(false);
+
   useEffect(
     () => {
-      getAllJournals(setJournalList);
-      getAllClients(setClientList);
-      getAllBooks(setBookList);
-      getAllBookTypes(setBookTypeList);
-    },
-    []
-  );
+      if (!isRenderedRef.current) {
+        getAllJournals(setJournalList);
+        getAllClients(setClientList);
+        getAllBooks(setBookList);
+        getAllBookTypes(setBookTypeList);
+        isRenderedRef.current = true;
+      }
+    }, []);
   
   return (
     <BrowserRouter>

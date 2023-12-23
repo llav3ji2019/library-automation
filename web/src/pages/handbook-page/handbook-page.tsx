@@ -22,7 +22,6 @@ type HandbookPageProps = {
 }
 
 function HandbookPage({books, clients, booksType, setBookList, setBookTypeList, setClientList}: HandbookPageProps): JSX.Element {
-  
   const defaultClient = {
     id: 0,
     first_name: "Enter your name",
@@ -109,8 +108,6 @@ const handleDeleteClient = (deletedClient: Client) => {
 }
 
 const handleChangeBookType = (newBookType: BookType) => {
-  
-  console.log(JSON.stringify(curBookType));   
   axios.put<string>(
     'http://localhost:8080/library/book_type/update',
     newBookType,

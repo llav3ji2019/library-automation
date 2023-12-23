@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FormEvent } from "react";
+import { Dispatch, SetStateAction, FormEvent, useEffect } from "react";
 import Journal from '../../../types/journal';
 import Client from "../../../types/client";
 import Book from "../../../types/book";
@@ -26,7 +26,10 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
     })
   }
 
-  addListenersToDropDownList(document);
+  useEffect(() => {
+    addListenersToDropDownList(document);
+  }, []);
+
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Journal Form</h2>

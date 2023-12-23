@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FormEvent } from "react";
+import { Dispatch, SetStateAction, FormEvent, useEffect } from "react";
 import BookType from '../../../types/book-type';
 import Book from "../../../types/book";
 import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
@@ -22,7 +22,10 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
       [name]: value
     })
   }
-  addListenersToDropDownList(document);
+
+  useEffect(() => {
+    addListenersToDropDownList(document);
+  }, []);
 
   return (
   <div className="journal-form">

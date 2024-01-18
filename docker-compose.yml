@@ -1,11 +1,44 @@
 version: '3.8'
 services:
-  lib-db:
-    image: postgres:14.1-alpine
+  library-client:
+    image: client-library:latest
+    depends_on:
+      - server
     restart: always
+    ports:
+      - "3030:3030"
+    stdin_open: true
+    container_name: library-client
+
+  server:
+    image: library-automation:latest
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    depends_on:
+      - service-db
+    ports:
+      - "8080:8080"
     environment:
-      - POSTGRES_DB=lib-db
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/lib-db
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+    container_name: library-server
+
+  service-db:
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_DB: lib-db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
     ports:
       - '5438:5432'
+    restart: always
+    container_name: library-db
+    volumes:
+      - db:/var/lib/postgresql/library
+
+volumes:
+  db:
+    driver: local

@@ -23,7 +23,7 @@ function ClientTable({clients, setCurrentClient, setFormActive, setIsClientUpdat
         </tr>
         {
             clients.map((client) => (
-              <tr>
+              <tr key={client.id} >
                 <td>{client.id}</td>
                 <td>{client.first_name}</td>
                 <td>{client.last_name}</td>

@@ -21,7 +21,7 @@ function BookTypeTable({booksType, setCurrentBookType, setFormActive, setIsBookT
       </tr>
     {
         booksType.map((type) => (
-          <tr>
+          <tr key={type.id}>
             <td>{type.id}</td>
             <td>{type.name}</td>
             <td>{type.fine}</td>

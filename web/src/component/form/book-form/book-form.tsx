@@ -42,11 +42,11 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
       </div>
       <div className="custom-form-block">
         <label>Book name</label>
-        <input type="text" id="name" name="name" autoComplete="off" defaultValue={currentBook.name || "Enter book name"} onChange={handleFieldChange} />
+        <input type="text" id="name" name="name" autoComplete="off" value={currentBook.name || "Enter book name"} onChange={handleFieldChange} />
       </div>
       <div className="custom-form-block">
         <label>Amount</label>
-        <input type="number" id="cnt" name="cnt" autoComplete="off" defaultValue={currentBook.cnt || "Enter amount"} onChange={handleFieldChange}/>
+        <input type="number" id="cnt" name="cnt" autoComplete="off" value={currentBook.cnt || "Enter amount"} onChange={handleFieldChange}/>
       </div>
     </form>
     <input type="submit" name="submit" value="Submit"

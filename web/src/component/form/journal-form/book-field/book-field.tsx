@@ -20,7 +20,7 @@ function BookField({books, setCurrentJournal, currentJournal} : BookFieldProps):
       <div className="select__body">
       {
         books.map(
-          el => (<div className="select__item" onClick={() => {
+          el => (<div key={el.id} className="select__item" onClick={() => {
             setCurrentJournal({
               ...currentJournal,
               book_name: el.name

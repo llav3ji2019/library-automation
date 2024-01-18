@@ -29,7 +29,7 @@ function HandbookTable({tableStatus, books, booksType, clients, setCurrentBook, 
     case TableStatus.BOOK_STATE:
       return <BookTable books={books} setCurrentBook={setCurrentBook} setIsBookUpdateMethod={setIsBookUpdateMethod} handleDeleteBook={handleDeleteBook}
       setFormActive={setFormActive}/>;
-    case TableStatus.BOOK_STATE:
+    case TableStatus.BOOK_TYPE_STATE:
       return <BookTypeTable booksType={booksType} setCurrentBookType={setCurrentBookType} handleDeleteBookType={handleDeleteBookType}
         setIsBookTypeUpdateMethod={setIsBookTypeUpdateMethod} setFormActive={setFormActive}/>;
   }

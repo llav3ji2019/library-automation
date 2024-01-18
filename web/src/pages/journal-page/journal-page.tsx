@@ -125,7 +125,7 @@ function JournalPage({journals, clients, books, setJournals} : JournalPageProps)
             </tr>
             {
               journals.map((journal) => (
-                <tr>
+                <tr key={journal.id}>
                   <td>{journal.id}</td>
                   <td>{journal.book_name}</td>
                   <td>{journal.client_name}</td>

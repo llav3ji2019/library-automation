@@ -13,7 +13,7 @@ function BookTypesList({bookTypes, currentBook, setCurrentBook} : BookTypesListP
     <div className="select__body">
       {
         bookTypes.map(el => (
-        <div className="select__item" 
+        <div className="select__item"  key={el.id}
         onClick={() => {
           setCurrentBook({
             ...currentBook,

@@ -20,7 +20,8 @@ function ClientField({clients, setCurrentJournal, currentJournal} : ClientFieldP
       <div className="select__body">
       {
         clients.map(el => (
-        <div className="select__item" 
+        <div className="select__item"
+        key={el.id}
         onClick={() => {
           setCurrentJournal({
             ...currentJournal,

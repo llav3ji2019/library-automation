@@ -25,12 +25,12 @@ function BookTypeForm({setActive, setCurrentBookType, currentBookType, onAddBook
     <form>
       <div className="custom-form-block">
         <label>Fine</label>
-        <input type="number" id="fine" name="fine" autoComplete="off" defaultValue={currentBookType.fine || "Enter fine amount"} onChange={handleFieldChange} />
+        <input type="number" id="fine" name="fine" autoComplete="off" value={currentBookType.fine || "Enter fine amount"} onChange={handleFieldChange} />
       </div>
       <div className="custom-form-block">
         <label>Day amount</label>
         <input type="number" id="day_count" name="day_count" autoComplete="off"
-        defaultValue={currentBookType.day_count || "Enter passport day count"} onChange={handleFieldChange} />
+        value={currentBookType.day_count || "Enter passport day count"} onChange={handleFieldChange} />
       </div>
       <div className="custom-form-block">
         <label>Type name</label>

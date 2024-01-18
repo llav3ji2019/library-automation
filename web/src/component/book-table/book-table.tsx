@@ -21,7 +21,7 @@ function BookTable({books, setCurrentBook, setFormActive, setIsBookUpdateMethod,
     </tr>
     {
         books.map((book) => (
-          <tr>
+          <tr key={book.id}>
             <td>{book.id}</td>
             <td>{book.name}</td>
             <td>{book.cnt}</td>

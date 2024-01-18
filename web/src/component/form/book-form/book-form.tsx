@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction, FormEvent, useEffect } from "react";
+import { Dispatch, SetStateAction, FormEvent } from "react";
 import BookType from '../../../types/book-type';
 import Book from "../../../types/book";
-import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
-import BookTypesList from "./book-types-list/book-types-list";
+import ReactSelect from "react-select";
 
 type BookFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -14,7 +13,20 @@ type BookFormProps = {
   isBookUpdateMethod: boolean
 }
 
+type BookTypeOption = {
+  value: string,
+  label: string
+}
+
 function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook, onChangeBook, isBookUpdateMethod}: BookFormProps): JSX.Element {
+  const bookTypesOptions: BookTypeOption[] = [];
+  bookTypes.map(el => {
+    bookTypesOptions.push({
+      value: el.name,
+      label: el.name
+    })
+  });
+
   const handleFieldChange = (evt: FormEvent<HTMLInputElement>) => {
     const {name, value} = evt.currentTarget;
     setCurrentBook({
@@ -23,22 +35,27 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
     })
   }
 
-  useEffect(() => {
-    addListenersToDropDownList(document);
-  }, []);
+  const getValue = () => {
+    return currentBook? bookTypesOptions.find(c => c?.value === currentBook.type_name): ''
+  }
+
+  const onSelectChange = (newValue: any) => {
+    setCurrentBook({
+      ...currentBook,
+      type_name: newValue.value
+    });
+  }
 
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Book Form</h2>
     <form>
-    <div className="custom-form-block">
-        <div className="select">
-          <div className="select__header">
-            <span className="select__current">{currentBook?.type_name ?? "Type name"}</span>
-            <div className="select__icon">&times;</div>
+      <div className="custom-form-block">
+          <label>Book type name</label>
+          <div className="custom-select">
+            <ReactSelect name="book_type" className="basic-single" classNamePrefix="select" defaultInputValue={currentBook.type_name || "Type name"}
+              isSearchable={true} onChange={onSelectChange} value={getValue()} options={bookTypesOptions}/>
           </div>
-          <BookTypesList currentBook={currentBook} setCurrentBook={setCurrentBook} bookTypes={bookTypes} />
-        </div>
       </div>
       <div className="custom-form-block">
         <label>Book name</label>

@@ -10,7 +10,7 @@ function CustomForm(props: CustomFormProps): JSX.Element {
   return (
     <div className={props.active ? "form active" : "form"} onClick={() => props.setActive(false)}>
       <div className={props.active ? "form__content active" : "form__content"} onClick={e => e.stopPropagation()}>
-        {props.children}
+        {props.active && props.children}
       </div>
     </div>  
   );

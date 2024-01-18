@@ -28,25 +28,9 @@
   transition: 0.4s all;
 }
 
-
 .form__content.active {
   transform: scale(1);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .custom-form__title {
   color: #000;
@@ -60,7 +44,7 @@
 }
 
 .journal-form .custom-form-block input{
-  width: auto;
+  width: 75%;
   padding: 10px 0;
   font-size: 16px;
   color: #000;
@@ -81,6 +65,9 @@
   pointer-events: none;
   transition: .5s;
   margin-right: 20px;
+  width: 150px;
+  display: inline-block;
+  text-align: left;
 }
 .journal-form input[type="submit"]{
   background: transparent;
@@ -108,61 +95,6 @@
     font-weight: bold;
 }
 
-.select {
-	margin: 0 auto;
-	position: relative;
-	width: 250px;
-}
-.select.is-active .select__body {
-	display: block;
-
-}
-
-.select__header {
-	border: 1px solid #ccc;
-	cursor: pointer;
-	display: flex;
-}
-.select__current {
-	font-size: 18px;
-	line-height: 24px;
-	padding: 8px;
-  background-color: inherit;
-}
-.select__icon {
-	align-items: center;
-	display: flex;
-	flex-shrink: 0;
-	justify-content: center;
-	height: 40px;
-	margin-left: auto;
-	text-align: center;
-	width: 40px;
-}
-
-.select__body {
-	border: 1px solid #cccccc;
-	border-top: 0;
-	display: none;
-	left: 0;
-	position: absolute;
-  z-index: 1;
-	right: 0;
-  max-height: 300px;
-  overflow: auto;
-}
-.select__item {
-	cursor: pointer;
-	font-size: 16px;
-	line-height: 24px;
-	padding: 8px;
-  background-color: #fff;
-}
-
-.select__item:hover {
-	background-color: #f2f2f2;
-}
-
 .report-page__select { 
   display: block; 
   font-size: 16px; 
@@ -187,26 +119,33 @@
 
 .report-page__select option { font-weight:normal; } 
 
-  .report-form-block input[type="submit"]{
-    background: transparent;
-    color: #000;
-    background: #b0f88f;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 10px;
-  }
-  .report-form-block label {
-    width: 200px;
-    margin-right: 10px;
-  }
+.report-form-block input[type="submit"]{
+  background: transparent;
+  color: #000;
+  background: #b0f88f;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+.report-form-block label {
+  width: 200px;
+  margin-right: 10px;
+}
 
-  .report-form-block {
-    margin: 10px 0;
-    display: flex;
-  }
+.report-form-block {
+  margin: 10px 0;
+  display: flex;
+}
 
-  .reportData {
-    margin: 10px 0;
+.reportData {
+  margin: 10px 0;
+}
 
-  }
+.custom-select {
+  display: inline-block;
+  width: 75%;
+  padding: 10px 0;
+  margin-bottom: 30px;
+  background: transparent;
+}

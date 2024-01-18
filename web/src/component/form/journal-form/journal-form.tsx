@@ -1,10 +1,9 @@
-import { Dispatch, SetStateAction, FormEvent, useEffect } from "react";
+import { Dispatch, SetStateAction, FormEvent } from "react";
 import Journal from '../../../types/journal';
 import Client from "../../../types/client";
 import Book from "../../../types/book";
-import { addListenersToDropDownList } from "../../custom-drop-down-list/listeners";
-import BookField from "./book-field/book-field";
-import ClientField from "./client-field/client-field";
+import ReactSelect from "react-select";
+import { getFullName } from "../../../utils/client-utils";
 
 type JournalFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -17,7 +16,29 @@ type JournalFormProps = {
   isJournalUpdateMethod: boolean
 }
 
+type SelectOption = {
+  value: string,
+  label: string
+}
+
 function JournalForm({setActive, setCurrentJournal, currentJournal, clients, books, onAddJournal, onChangeJournal, isJournalUpdateMethod}: JournalFormProps): JSX.Element {
+  const bookOptions: SelectOption[] = [];
+  books.map(el => {
+    bookOptions.push({
+      value: el.name,
+      label: el.name
+    })
+  });
+
+  const clientOptions: SelectOption[] = [];
+  clients.map(el => {
+    const fullName = getFullName(el);
+    clientOptions.push({
+      value: fullName,
+      label: fullName
+    })
+  });
+
   const handleFieldChange = (evt: FormEvent<HTMLInputElement>) => {
     const {name, value} = evt.currentTarget;
     setCurrentJournal({
@@ -26,17 +47,47 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
     })
   }
 
-  useEffect(() => {
-    addListenersToDropDownList(document);
-  }, []);
+  const getClientValue = () => {
+    return currentJournal? bookOptions.find(el => el?.value === currentJournal.client_name): ''
+  }
+
+  const getBookValue = () => {
+    return currentJournal? clientOptions.find(el => el?.value === currentJournal.book_name): ''
+  }
+
+  const onClientSelectChange = (newValue: any) => {
+    setCurrentJournal({
+      ...currentJournal,
+      client_name: newValue.value
+    });
+  }
+
+  const onBookSelectChange = (newValue: any) => {
+    setCurrentJournal({
+      ...currentJournal,
+      book_name: newValue.value
+    });
+  }
 
   return (
   <div className="journal-form">
     <h2 className="custom-form__title">Journal Form</h2>
     <form>
-      <ClientField setCurrentJournal={setCurrentJournal} currentJournal={currentJournal} clients={clients} />
+      <div className="custom-form-block">
+          <label>Client name</label>
+          <div className="custom-select">
+            <ReactSelect name="client_name" className="basic-single" classNamePrefix="select" defaultInputValue={currentJournal?.client_name ?? "Client name"}
+              isSearchable={true} onChange={onClientSelectChange} value={getClientValue()} options={clientOptions}/>
+          </div>
+      </div>
 
-      <BookField setCurrentJournal={setCurrentJournal} currentJournal={currentJournal} books={books} />
+      <div className="custom-form-block">
+          <label>Book name</label>
+          <div className="custom-select">
+            <ReactSelect name="book_nane" className="basic-single" classNamePrefix="select" defaultInputValue={currentJournal?.book_name ?? "Book name"}
+              isSearchable={true} onChange={onBookSelectChange} value={getBookValue()} options={bookOptions}/>
+          </div>
+      </div>
       
       <div className="custom-form-block">
         <label>Begin date:</label>

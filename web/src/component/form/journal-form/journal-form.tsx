@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, FormEvent } from "react";
 import Journal from '../../../types/journal';
 import Client from "../../../types/client";
 import Book from "../../../types/book";
-import ReactSelect from "react-select";
+import ReactSelect, { OnChangeValue } from "react-select";
 import { getFullName } from "../../../utils/client-utils";
 
 type JournalFormProps = {
@@ -55,17 +55,17 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
     return currentJournal? clientOptions.find(el => el?.value === currentJournal.book_name): ''
   }
 
-  const onClientSelectChange = (newValue: any) => {
+  const onClientSelectChange = (newValue: OnChangeValue<SelectOption, boolean>) => {
     setCurrentJournal({
       ...currentJournal,
-      client_name: newValue.value
+      client_name: (newValue as SelectOption).value
     });
   }
 
-  const onBookSelectChange = (newValue: any) => {
+  const onBookSelectChange = (newValue: OnChangeValue<SelectOption, boolean>) => {
     setCurrentJournal({
       ...currentJournal,
-      book_name: newValue.value
+      book_name: (newValue as SelectOption).value
     });
   }
 
@@ -77,7 +77,7 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
           <label>Client name</label>
           <div className="custom-select">
             <ReactSelect name="client_name" className="basic-single" classNamePrefix="select" defaultInputValue={currentJournal?.client_name ?? "Client name"}
-              isSearchable={true} onChange={onClientSelectChange} value={getClientValue()} options={clientOptions}/>
+              onChange={onClientSelectChange} value={getClientValue()} options={clientOptions}/>
           </div>
       </div>
 
@@ -85,7 +85,7 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
           <label>Book name</label>
           <div className="custom-select">
             <ReactSelect name="book_nane" className="basic-single" classNamePrefix="select" defaultInputValue={currentJournal?.book_name ?? "Book name"}
-              isSearchable={true} onChange={onBookSelectChange} value={getBookValue()} options={bookOptions}/>
+              onChange={onBookSelectChange} value={getBookValue()} options={bookOptions}/>
           </div>
       </div>
       

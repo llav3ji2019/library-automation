@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, FormEvent } from "react";
 import BookType from '../../../types/book-type';
 import Book from "../../../types/book";
-import ReactSelect from "react-select";
+import ReactSelect, { OnChangeValue } from "react-select";
 
 type BookFormProps = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -39,10 +39,10 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
     return currentBook? bookTypesOptions.find(c => c?.value === currentBook.type_name): ''
   }
 
-  const onSelectChange = (newValue: any) => {
+  const onSelectChange = (newValue: OnChangeValue<BookTypeOption, boolean>) => {
     setCurrentBook({
       ...currentBook,
-      type_name: newValue.value
+      type_name: (newValue as BookTypeOption).value
     });
   }
 

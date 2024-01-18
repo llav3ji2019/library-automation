@@ -47,14 +47,6 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
     })
   }
 
-  const getClientValue = () => {
-    return currentJournal? bookOptions.find(el => el?.value === currentJournal.client_name): ''
-  }
-
-  const getBookValue = () => {
-    return currentJournal? clientOptions.find(el => el?.value === currentJournal.book_name): ''
-  }
-
   const onClientSelectChange = (newValue: OnChangeValue<SelectOption, boolean>) => {
     setCurrentJournal({
       ...currentJournal,
@@ -77,7 +69,7 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
           <label>Client name</label>
           <div className="custom-select">
             <ReactSelect name="client_name" className="basic-single" classNamePrefix="select" defaultInputValue={currentJournal?.client_name ?? "Client name"}
-              onChange={onClientSelectChange} value={getClientValue()} options={clientOptions}/>
+              onChange={onClientSelectChange} options={clientOptions}/>
           </div>
       </div>
 
@@ -85,7 +77,7 @@ function JournalForm({setActive, setCurrentJournal, currentJournal, clients, boo
           <label>Book name</label>
           <div className="custom-select">
             <ReactSelect name="book_nane" className="basic-single" classNamePrefix="select" defaultInputValue={currentJournal?.book_name ?? "Book name"}
-              onChange={onBookSelectChange} value={getBookValue()} options={bookOptions}/>
+              onChange={onBookSelectChange} options={bookOptions}/>
           </div>
       </div>
       

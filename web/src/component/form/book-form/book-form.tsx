@@ -35,10 +35,6 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
     })
   }
 
-  const getValue = () => {
-    return currentBook? bookTypesOptions.find(c => c?.value === currentBook.type_name): ''
-  }
-
   const onSelectChange = (newValue: OnChangeValue<BookTypeOption, boolean>) => {
     setCurrentBook({
       ...currentBook,
@@ -54,7 +50,7 @@ function BookForm({setActive, setCurrentBook, currentBook, bookTypes, onAddBook,
           <label>Book type name</label>
           <div className="custom-select">
             <ReactSelect name="book_type" className="basic-single" classNamePrefix="select" defaultInputValue={currentBook.type_name || "Type name"}
-              isSearchable={true} onChange={onSelectChange} value={getValue()} options={bookTypesOptions}/>
+              isSearchable={true} onChange={onSelectChange} options={bookTypesOptions} />
           </div>
       </div>
       <div className="custom-form-block">

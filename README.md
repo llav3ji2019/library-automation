@@ -1,4 +1,5 @@
 # Автоматизация библиотеки
+![index-page.png](img%2Findex-page.png)
 ![Static Badge](https://img.shields.io/badge/MIT-green?label=License)
 ![Static Badge](https://img.shields.io/badge/v1.0_(Alpha)-blue?label=Version)
 ![NPM Version](https://img.shields.io/npm/v/react)
@@ -73,6 +74,3 @@
 |--------|---------|-------------------------------------------------------------------------------|
 | admin  | admin   | Ко всем табличкам с правами  на удаление, редактрирование, добавление         |
 | oleg   | oleg123 | Только к таблице с журналом с правами на удаление, редактирование, добавление |
-
-### Главная страница приложения
-![index-page.png](img%2Findex-page.png)

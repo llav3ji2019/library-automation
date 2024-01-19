@@ -1,4 +1,8 @@
 # Автоматизация библиотеки
+![Static Badge](https://img.shields.io/badge/MIT-green?label=License)
+![Static Badge](https://img.shields.io/badge/v1.0_(Alpha)-blue?label=Version)
+![NPM Version](https://img.shields.io/npm/v/react)
+
 ## Описание работы
 Автоматизация процесса взятие книги из библиотеки.
 
